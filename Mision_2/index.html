@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misión 2 — Panel de Control</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo">
+            <span class="logo-emoji">🚀</span>
+            <h1>Misión 2</h1>
+        </div>
+        <div class="datetime">
+            <span id="current-date"></span> — <span id="current-time"></span>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <!-- Saludo Dinámico -->
+        <section class="welcome-card card">
+            <h2 id="greeting">¡Hola, Aventurero!</h2>
+            <p>Bienvenido a tu nuevo espacio de desarrollo. Este panel está listo para tus próximas misiones y experimentos web.</p>
+        </section>
+
+        <!-- Notas Rápidas -->
+        <section class="notes-card card">
+            <h2>📝 Notas Rápidas</h2>
+            <div class="note-input-container">
+                <input type="text" id="note-input" placeholder="Escribe una nueva nota..." aria-label="Nueva nota">
+                <button id="add-note-btn" type="button">Agregar</button>
+            </div>
+            <ul id="notes-list" class="notes-list">
+                <!-- Las notas se agregarán dinámicamente aquí -->
+            </ul>
+        </section>
+
+        <!-- Contador Interactivo / Estadísticas -->
+        <section class="stats-card card">
+            <h2>⚡ Clics de Energía</h2>
+            <p>Haz clic en el botón de abajo para cargar energía para tus misiones.</p>
+            <div class="counter-display">
+                <span id="counter-value">0</span> <span class="unit">clicks</span>
+            </div>
+            <button id="counter-btn" type="button" class="btn-primary">¡Cargar Energía! 🔋</button>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>Prácticas y Misiones de Web Development I — Diseñado con ❤️</p>
+    </footer>
+</body>
+</html>
