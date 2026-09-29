@@ -1,4 +1,4 @@
-// Sube la torre. Fase 3: salto, gravedad y aterrizaje.
+// Sube la torre. Fase 4: victoria y reinicio.
 // Este archivo se carga con "defer": cuando se ejecuta, el HTML ya existe.
 
 // COORDENADAS: todo se mide en píxeles desde la esquina inferior izquierda
@@ -7,6 +7,9 @@
 
 const zonaJuego = document.querySelector(".zona-juego");
 const personaje = document.querySelector(".personaje");
+const meta = document.querySelector(".meta");
+const mensajePartida = document.querySelector(".mensaje-partida");
+const botonReiniciar = document.querySelector(".boton-reiniciar");
 
 // El suelo y las plataformas: el personaje puede apoyarse en todos ellos.
 const superficies = document.querySelectorAll(".suelo, .plataforma");
@@ -21,13 +24,18 @@ const altoInterior = zonaJuego.clientHeight;
 const limiteDerecho = zonaJuego.clientWidth - personaje.offsetWidth;
 const limiteSuperior = altoInterior - personaje.offsetHeight;
 
-// Posición de los pies del personaje. Empieza donde lo colocó el CSS.
+// Posición inicial de los pies del personaje: donde lo colocó el CSS.
 // offsetTop se mide desde arriba, así que le damos la vuelta para medir desde abajo.
-let posicionX = personaje.offsetLeft;
-let posicionY = altoInterior - personaje.offsetTop - personaje.offsetHeight;
+// Se guarda para poder volver a ella al reiniciar.
+const inicioX = personaje.offsetLeft;
+const inicioY = altoInterior - personaje.offsetTop - personaje.offsetHeight;
+
+let posicionX = inicioX;
+let posicionY = inicioY;
 
 let velocidadY = 0;   // positiva: sube; negativa: cae
 let enSuelo = false;  // se decide en cada fotograma al comprobar el aterrizaje
+let partidaTerminada = false; // true desde que se toca la meta hasta reiniciar
 
 // Qué flechas laterales están pulsadas ahora mismo.
 const teclasPulsadas = {
@@ -47,7 +55,7 @@ window.addEventListener("keydown", function (evento) {
         evento.preventDefault();
         // evento.repeat es true cuando la tecla se mantiene pulsada:
         // así, mantener ↑ solo produce un salto.
-        if (enSuelo && !evento.repeat) {
+        if (enSuelo && !evento.repeat && !partidaTerminada) {
             velocidadY = fuerzaSalto;
             enSuelo = false;
         }
@@ -130,6 +138,35 @@ function moverEnVertical(segundos) {
     }
 }
 
+// ¿Se solapan la caja del personaje y la caja de la meta?
+// Hace falta coincidir en horizontal Y en vertical: estar solo a su altura no basta.
+function tocaMeta() {
+    const metaAbajo = altoInterior - meta.offsetTop - meta.offsetHeight;
+    const metaArriba = alturaSuperficie(meta);
+    const coincideVerticalmente = posicionY < metaArriba && posicionY + personaje.offsetHeight > metaAbajo;
+    return coincideHorizontalmente(meta) && coincideVerticalmente;
+}
+
+function ganar() {
+    partidaTerminada = true;
+    velocidadY = 0;
+    mensajePartida.textContent = "¡Has alcanzado la luz de la cima! Pulsa «Reiniciar» para jugar otra vez.";
+}
+
+// Solo cambia variables: el bucle y los eventos ya existentes siguen funcionando.
+function reiniciar() {
+    posicionX = inicioX;
+    posicionY = inicioY;
+    velocidadY = 0;
+    enSuelo = false;
+    teclasPulsadas.ArrowLeft = false;
+    teclasPulsadas.ArrowRight = false;
+    partidaTerminada = false;
+    mensajePartida.textContent = "";
+}
+
+botonReiniciar.addEventListener("click", reiniciar);
+
 function actualizar(tiempoActual) {
     // Segundos desde el fotograma anterior.
     let segundos = (tiempoActual - tiempoAnterior) / 1000;
@@ -145,8 +182,15 @@ function actualizar(tiempoActual) {
         segundos = 0;
     }
 
-    moverEnHorizontal(segundos);
-    moverEnVertical(segundos);
+    // Tras ganar, el bucle sigue funcionando pero el personaje ya no se mueve.
+    if (!partidaTerminada) {
+        moverEnHorizontal(segundos);
+        moverEnVertical(segundos);
+
+        if (tocaMeta()) {
+            ganar();
+        }
+    }
 
     personaje.style.left = posicionX + "px";
     personaje.style.bottom = posicionY + "px";

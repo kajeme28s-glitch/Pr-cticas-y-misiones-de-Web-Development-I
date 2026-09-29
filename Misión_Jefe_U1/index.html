@@ -9,13 +9,17 @@
 </head>
 <body>
     <header class="cabecera">
-        <p class="aviso-prototipo">Prototipo: aún no hay victoria ni reinicio</p>
         <h1>Sube la torre</h1>
         <p class="subtitulo">Salta de plataforma en plataforma hasta alcanzar la luz de la cima.</p>
     </header>
 
     <main class="contenido">
         <div class="marco-juego">
+            <div class="barra-partida">
+                <p class="mensaje-partida" role="status"></p>
+                <button type="button" class="boton-reiniciar">Reiniciar</button>
+            </div>
+
             <div class="zona-juego" role="img" aria-label="Escenario de la torre: el personaje espera en el suelo, cinco plataformas de piedra suben en zigzag y una luz brilla en la plataforma de la cima.">
                 <div class="suelo"></div>
 
@@ -32,21 +36,16 @@
         </div>
 
         <aside class="panel">
-            <h2>Controles disponibles</h2>
+            <h2>Controles</h2>
             <ul class="lista-controles">
                 <li><kbd>←</kbd> Flecha izquierda: moverse a la izquierda</li>
                 <li><kbd>→</kbd> Flecha derecha: moverse a la derecha</li>
                 <li><kbd>↑</kbd> Flecha arriba: saltar (suelta y vuelve a pulsar para saltar otra vez)</li>
-            </ul>
-
-            <h2>Próximamente</h2>
-            <ul class="lista-controles pendiente">
-                <li>Victoria al alcanzar la luz de la cima</li>
-                <li>Reiniciar la partida</li>
+                <li>Botón «Reiniciar»: volver a empezar desde el suelo</li>
             </ul>
 
             <h2>Objetivo</h2>
-            <p>Sube por las plataformas y alcanza la luz de la cima.</p>
+            <p>Sube por las plataformas y toca la luz de la cima para ganar.</p>
 
             <p class="nota">Si caes al suelo, puedes volver a intentarlo desde abajo.</p>
         </aside>
