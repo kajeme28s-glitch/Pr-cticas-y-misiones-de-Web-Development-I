@@ -1,4 +1,4 @@
-// Sube la torre. Fase 4: victoria y reinicio.
+// CLAIM the TOWER. Rediseño: caballero, teclas visuales y nueva victoria.
 // Este archivo se carga con "defer": cuando se ejecuta, el HTML ya existe.
 
 // COORDENADAS: todo se mide en píxeles desde la esquina inferior izquierda
@@ -10,6 +10,13 @@ const personaje = document.querySelector(".personaje");
 const meta = document.querySelector(".meta");
 const mensajePartida = document.querySelector(".mensaje-partida");
 const botonReiniciar = document.querySelector(".boton-reiniciar");
+
+// Dibujo de cada flecha en pantalla, con el mismo nombre que evento.key.
+const indicadores = {
+    ArrowUp: document.querySelector(".tecla-arriba"),
+    ArrowLeft: document.querySelector(".tecla-izquierda"),
+    ArrowRight: document.querySelector(".tecla-derecha")
+};
 
 // El suelo y las plataformas: el personaje puede apoyarse en todos ellos.
 const superficies = document.querySelectorAll(".suelo, .plataforma");
@@ -45,7 +52,21 @@ const teclasPulsadas = {
 
 let tiempoAnterior = performance.now();
 
+// Suelta todas las flechas: las laterales dejan de mover y los dibujos se levantan.
+function soltarTeclas() {
+    teclasPulsadas.ArrowLeft = false;
+    teclasPulsadas.ArrowRight = false;
+    indicadores.ArrowUp.classList.remove("pulsada");
+    indicadores.ArrowLeft.classList.remove("pulsada");
+    indicadores.ArrowRight.classList.remove("pulsada");
+}
+
 window.addEventListener("keydown", function (evento) {
+    // "in" comprueba si la tecla es una de las tres flechas del objeto.
+    if (evento.key in indicadores && !partidaTerminada) {
+        indicadores[evento.key].classList.add("pulsada");
+    }
+
     if (evento.key === "ArrowLeft" || evento.key === "ArrowRight") {
         evento.preventDefault(); // que la flecha no desplace la página
         teclasPulsadas[evento.key] = true;
@@ -63,16 +84,17 @@ window.addEventListener("keydown", function (evento) {
 });
 
 window.addEventListener("keyup", function (evento) {
+    if (evento.key in indicadores) {
+        indicadores[evento.key].classList.remove("pulsada");
+    }
+
     if (evento.key === "ArrowLeft" || evento.key === "ArrowRight") {
         teclasPulsadas[evento.key] = false;
     }
 });
 
 // Si la ventana pierde el foco, no llegará el keyup: soltamos las teclas a mano.
-window.addEventListener("blur", function () {
-    teclasPulsadas.ArrowLeft = false;
-    teclasPulsadas.ArrowRight = false;
-});
+window.addEventListener("blur", soltarTeclas);
 
 // Altura de la cara superior de un elemento, medida desde abajo.
 function alturaSuperficie(elemento) {
@@ -94,6 +116,12 @@ function moverEnHorizontal(segundos) {
     }
     if (teclasPulsadas.ArrowRight) {
         direccion = direccion + 1;
+    }
+
+    // El dibujo mira hacia donde se mueve. Si está quieto, conserva la dirección.
+    // Solo cambia una clase del dibujo: la caja de la física no se toca.
+    if (direccion !== 0) {
+        personaje.classList.toggle("mira-izquierda", direccion < 0);
     }
 
     posicionX = posicionX + direccion * velocidad * segundos;
@@ -150,19 +178,22 @@ function tocaMeta() {
 function ganar() {
     partidaTerminada = true;
     velocidadY = 0;
-    mensajePartida.textContent = "¡Has alcanzado la luz de la cima! Pulsa «Reiniciar» para jugar otra vez.";
+    soltarTeclas();
+    personaje.classList.add("oculto"); // el caballero entra por la puerta
+    mensajePartida.textContent = "Nivel superado";
 }
 
-// Solo cambia variables: el bucle y los eventos ya existentes siguen funcionando.
+// Solo cambia variables y clases: el bucle y los eventos ya existentes siguen funcionando.
 function reiniciar() {
     posicionX = inicioX;
     posicionY = inicioY;
     velocidadY = 0;
     enSuelo = false;
-    teclasPulsadas.ArrowLeft = false;
-    teclasPulsadas.ArrowRight = false;
+    soltarTeclas();
     partidaTerminada = false;
     mensajePartida.textContent = "";
+    // Vuelve a verse, mirando a la derecha y sin la animación de salto.
+    personaje.classList.remove("oculto", "mira-izquierda", "en-el-aire");
 }
 
 botonReiniciar.addEventListener("click", reiniciar);
@@ -186,6 +217,9 @@ function actualizar(tiempoActual) {
     if (!partidaTerminada) {
         moverEnHorizontal(segundos);
         moverEnVertical(segundos);
+
+        // En el aire se añade la clase: el CSS reproduce una vez el impulso del salto.
+        personaje.classList.toggle("en-el-aire", !enSuelo);
 
         if (tocaMeta()) {
             ganar();

@@ -1,21 +1,27 @@
-/* Sube la torre. Fase 1: escenario estático */
+/* CLAIM the TOWER: pantalla de juego pixel art con una interfaz mínima */
 
 /* ---------- Variables ---------- */
 :root {
-    color-scheme: dark;
+    color-scheme: light;
 
-    /* Colores: neutros fríos de piedra y un único acento (la luz) */
-    --color-cielo: #0f1420;
-    --color-cielo-claro: #1c2335;
-    --color-muro: #2b303b;
-    --color-muro-oscuro: #1f232c;
-    --color-junta: #171a21;
-    --color-piedra: #646973;
-    --color-piedra-borde: #8b909a;
-    --color-suelo: #3a3f4a;
-    --color-personaje: #b9c6d8;
-    --color-texto: #e6e8ec;
-    --color-texto-suave: #a9aeb8;
+    /* Página: salvia plano y verde oscuro para el texto */
+    --color-fondo: #cbd3c3;
+    --color-tinta: #2d3328;
+    --color-tinta-suave: #4d5645;
+    --color-tecla: #efece2;
+
+    /*
+       Escenario: la misma paleta que los SVG de assets/.
+       Pixel art a escala 2: cada píxel del dibujo mide 2px en pantalla.
+       Luz desde arriba a la izquierda: brillo arriba, sombra abajo y a la derecha.
+    */
+    --color-cielo: #cbe8ef;
+    --color-contorno: #2e2620;
+    --color-piedra: #cdb898;
+    --color-piedra-media: #b39d7a;
+    --color-piedra-sombra: #8f7a5a;
+    --color-hierba-clara: #9cc85e;
+    --color-hierba: #6fa03f;
     --color-luz: #f2b441;
 
     /* Medidas del escenario (en píxeles) */
@@ -36,86 +42,107 @@ body {
     padding: 32px 16px;
     font-family: system-ui, "Segoe UI", Roboto, sans-serif;
     line-height: 1.5;
-    color: var(--color-texto);
-    background-color: var(--color-cielo);
-    background-image: radial-gradient(circle at 50% 0%, var(--color-cielo-claro), var(--color-cielo) 60%);
+    color: var(--color-tinta);
+    background-color: var(--color-fondo);
 }
 
-.cabecera,
-.contenido {
-    max-width: 840px;
+/*
+   Rejilla de la página. Móvil primero: una sola columna.
+   En pantallas anchas, las teclas van a la derecha del escenario.
+*/
+.pagina {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "titulo"
+        "juego"
+        "controles"
+        "boton";
+    gap: 16px;
+    width: fit-content;
+    max-width: 100%;
     margin: 0 auto;
 }
 
-.cabecera {
-    margin-bottom: 24px;
-}
+/*
+   En pantallas anchas, columna derecha con las teclas y debajo «Reiniciar».
+   Las dos filas del juego se reparten el alto (1fr 1fr): las teclas se pegan
+   al final de la primera y el botón al principio de la segunda, así el grupo
+   queda centrado junto al escenario.
+*/
+@media (min-width: 720px) {
+    .pagina {
+        grid-template-columns: var(--ancho-juego) auto;
+        grid-template-rows: auto 1fr 1fr;
+        grid-template-areas:
+            "titulo ."
+            "juego controles"
+            "juego boton";
+        column-gap: 40px;
+    }
 
-h1 {
-    margin: 0;
-    font-size: 2.25rem;
-    line-height: 1.1;
-    letter-spacing: 0.01em;
-}
+    .controles {
+        align-self: end;
+    }
 
-.subtitulo {
-    margin: 8px 0 0;
-    color: var(--color-texto-suave);
-}
-
-/* Móvil primero: una columna. En pantallas anchas, juego a la izquierda y panel a la derecha */
-.contenido {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
-}
-
-@media (min-width: 800px) {
-    .contenido {
-        grid-template-columns: var(--ancho-juego) 1fr;
-        align-items: start;
+    .boton-reiniciar {
+        align-self: start;
+        margin-top: 24px; /* separación clara respecto a las flechas */
     }
 }
 
-/* Si la pantalla es más estrecha que el juego, se desplaza solo este marco, no la página */
+.titulo {
+    grid-area: titulo;
+    margin: 0;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: clamp(1.75rem, 7vw, 2.5rem); /* más pequeño en pantallas estrechas */
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* «the» pequeño y en minúsculas: la jerarquía la marcan CLAIM y TOWER */
+.titulo-the {
+    font-size: 0.5em;
+    font-weight: 500;
+    font-style: italic;
+    text-transform: lowercase;
+    color: var(--color-tinta-suave);
+}
+
 .marco-juego {
+    grid-area: juego;
     overflow-x: auto;
 }
 
-/* ---------- Barra de la partida: mensaje y botón ---------- */
-/* El padding deja sitio al contorno de foco del botón: .marco-juego recorta lo que sobresale */
-.barra-partida {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 4px;
-    margin-bottom: 8px;
+/* Caja de referencia del mensaje de victoria: mide lo mismo que el juego */
+.escenario {
+    position: relative;
+    width: var(--ancho-juego);
 }
 
-.mensaje-partida {
-    margin: 0;
-    font-weight: 600;
-    color: var(--color-luz);
-}
-
+/* ---------- Botón Reiniciar ---------- */
 .boton-reiniciar {
-    padding: 8px 16px;
-    border: 1px solid var(--color-piedra-borde);
-    border-radius: 6px;
-    background-color: var(--color-muro);
-    color: var(--color-texto);
+    grid-area: boton;
+    justify-self: center; /* centrado bajo las flechas */
+    padding: 8px 20px;
+    border: 2px solid var(--color-tinta);
+    border-radius: 0;
+    background-color: var(--color-tinta);
+    color: var(--color-tecla);
     font: inherit;
+    font-weight: 600;
     cursor: pointer;
 }
 
 .boton-reiniciar:hover {
-    border-color: var(--color-luz);
+    background-color: var(--color-tinta-suave);
 }
 
 .boton-reiniciar:focus-visible {
-    outline: 2px solid var(--color-luz);
-    outline-offset: 2px;
+    outline: 3px solid var(--color-tinta);
+    outline-offset: 3px;
 }
 
 /* ---------- Zona de juego ---------- */
@@ -123,44 +150,77 @@ h1 {
    La zona de juego es la "caja de referencia": tiene position: relative.
    Todo lo que hay dentro tiene position: absolute, así que sus valores
    left y bottom se miden desde la esquina inferior izquierda de esta caja.
+   El fondo es solo decoración. Mide lo mismo que el interior (476x596),
+   así sus píxeles caen en la misma cuadrícula de 2px que las plataformas.
 */
 .zona-juego {
     position: relative;
     width: var(--ancho-juego);
     height: var(--alto-juego);
     overflow: hidden;
-    border: 2px solid var(--color-piedra);
-    border-radius: 6px;
-    background-color: var(--color-muro);
-    background-image:
-        /* resplandor de la luz de la cima */
-        radial-gradient(circle at 76% 6%, rgba(242, 180, 65, 0.18), transparent 35%),
-        /* juntas horizontales entre hileras de piedra: 38px de piedra + 2px de junta */
-        repeating-linear-gradient(to bottom, transparent 0 38px, var(--color-junta) 38px 40px),
-        /* el muro se oscurece hacia arriba */
-        linear-gradient(to top, var(--color-muro), var(--color-muro-oscuro));
+    border: 2px solid var(--color-tinta);
+    background: var(--color-cielo) url("assets/escenario.svg") 0 0 / 476px 596px no-repeat;
 }
 
+/*
+   Suelo y plataformas usan los sillares de la torre, dibujados con degradados
+   de cortes duros: cada franja mide un múltiplo de 2px (un píxel del dibujo).
+*/
+
+/* Suelo: contorno, hierba y dos hileras de sillares desplazadas */
 .suelo {
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
     height: var(--alto-suelo);
-    background-color: var(--color-suelo);
-    border-top: 3px solid var(--color-piedra-borde);
+    background-color: var(--color-piedra-media);
+    background-image:
+        /* franjas horizontales: contorno, hierba, brillo y juntas de cada hilera */
+        linear-gradient(to bottom,
+            var(--color-contorno) 0 2px,
+            var(--color-hierba-clara) 2px 4px,
+            var(--color-hierba) 4px 8px,
+            var(--color-piedra) 8px 10px,
+            transparent 10px 22px,
+            var(--color-piedra-sombra) 22px 24px,
+            var(--color-piedra) 24px 26px,
+            transparent 26px 38px,
+            var(--color-piedra-sombra) 38px),
+        /* juntas verticales: una cada 40px, a la derecha de cada sillar */
+        linear-gradient(to right, transparent 38px, var(--color-piedra-sombra) 38px),
+        linear-gradient(to right, transparent 38px, var(--color-piedra-sombra) 38px);
+    background-size: 100% 100%, 40px 12px, 40px 12px;
+    /* la segunda hilera se desplaza medio sillar (20px) */
+    background-position: 0 0, 0 10px, 20px 26px;
+    background-repeat: no-repeat, repeat-x, repeat-x;
 }
 
-/* Estilo común de todas las plataformas */
+/*
+   Estilo común de todas las plataformas: sillar con hierba y contorno de 2px.
+   Con box-sizing: border-box el borde queda dentro de los 110x16: la caja,
+   y por tanto la colisión, no cambia. Su cara superior sigue siendo la superficie.
+*/
 .plataforma {
     position: absolute;
     width: 110px;
     height: var(--alto-plataforma);
-    background-color: var(--color-piedra);
-    border-top: 3px solid var(--color-piedra-borde);
-    border-radius: 3px;
-    /* sombra sólida debajo: la plataforma parece un bloque con grosor */
-    box-shadow: 0 6px 0 var(--color-junta);
+    border: 2px solid var(--color-contorno);
+    background-color: var(--color-piedra-media);
+    background-image:
+        /* hierba, brillo de la piedra y sombra inferior */
+        linear-gradient(to bottom,
+            var(--color-hierba-clara) 0 2px,
+            var(--color-hierba) 2px 4px,
+            var(--color-piedra) 4px 6px,
+            transparent 6px 10px,
+            var(--color-piedra-sombra) 10px),
+        /* juntas verticales: una cada 20px */
+        linear-gradient(to right, transparent 18px, var(--color-piedra-sombra) 18px);
+    background-size: 100% 100%, 20px 100%;
+    background-repeat: no-repeat, repeat-x;
+    /* sombra en bloque sobre el muro, hacia abajo a la derecha (lejos del sol) */
+    box-shadow: 4px 4px 0 var(--color-piedra-media);
 }
 
 /* Posición de cada plataforma: zigzag, subiendo 80px cada vez */
@@ -176,92 +236,169 @@ h1 {
     width: 160px;
 }
 
-/* Meta: la luz, centrada sobre la plataforma de la cima.
+/* Meta: la puerta, centrada sobre la plataforma de la cima.
    left = 250 + (160 - 24) / 2 = 318px
-   bottom = 520 + 16 (alto de la plataforma) = 536px */
+   bottom = 520 + 16 (alto de la plataforma) = 536px
+   Su caja (24x36) es la que cuenta para ganar; el dibujo es mayor. */
 .meta {
     position: absolute;
     left: 318px;
     bottom: 536px;
     width: 24px;
     height: 36px;
-    border-radius: 12px 12px 6px 6px;
-    background-image: radial-gradient(circle at 50% 60%, #fff3d6, var(--color-luz) 70%);
-    box-shadow: 0 0 24px 6px rgba(242, 180, 65, 0.45);
 }
 
-/* Personaje: de pie sobre el suelo, así que su bottom es el alto del suelo */
+/*
+   Dibujo de la puerta con su resplandor escalonado: 44x44 (22x22 píxeles de 2px).
+   La puerta mide 36px y el resplandor añade 4px por cada lado y por arriba:
+   left = -(36 - 24) / 2 - 4 = -10px. Se apoya en la plataforma (bottom: 0).
+*/
+.meta::after {
+    content: "";
+    position: absolute;
+    left: -10px;
+    bottom: 0;
+    width: 44px;
+    height: 44px;
+    background: url("assets/puerta.svg") 0 0 / 44px 44px no-repeat;
+}
+
+/* Personaje: la caja de la física. De pie sobre el suelo: su bottom es el alto del suelo */
 .personaje {
     position: absolute;
     left: 40px;
     bottom: var(--alto-suelo);
     width: 28px;
     height: 40px;
-    background-color: var(--color-personaje);
-    border-radius: 8px 8px 3px 3px;
 }
 
-/* Visera del casco: un rectángulo oscuro dibujado con ::after */
-.personaje::after {
-    content: "";
+/* El dibujo ocupa la caja entera. Girarlo o animarlo no cambia la caja */
+.sprite-personaje {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* El dibujo mira a la derecha; "scale: -1 1" lo refleja en horizontal */
+.mira-izquierda .sprite-personaje {
+    scale: -1 1;
+}
+
+/* Al ganar, el caballero entra por la puerta: desaparece */
+.personaje.oculto {
+    opacity: 0;
+}
+
+/* ---------- Mensaje de victoria ---------- */
+/* position: absolute lo saca del flujo: aparece encima del juego sin mover nada */
+.mensaje-partida {
     position: absolute;
-    top: 10px;
-    left: 6px;
-    width: 16px;
-    height: 5px;
-    border-radius: 2px;
-    background-color: var(--color-cielo);
-}
-
-/* Parpadeo suave de la luz, solo si el usuario no ha pedido reducir el movimiento */
-@media (prefers-reduced-motion: no-preference) {
-    .meta {
-        animation: parpadeo 2.4s ease-in-out infinite alternate;
-    }
-}
-
-@keyframes parpadeo {
-    from { opacity: 1; }
-    to { opacity: 0.8; }
-}
-
-/* ---------- Panel lateral ---------- */
-.panel h2 {
-    margin: 0 0 12px;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
+    inset: 0;
+    width: fit-content;
+    height: fit-content;
+    margin: auto; /* con inset: 0, centra el mensaje dentro del escenario */
+    padding: 12px 24px;
+    border: 4px solid var(--color-luz);
+    background-color: var(--color-contorno);
+    box-shadow: 4px 4px 0 var(--color-piedra-sombra);
+    color: #fff3d6;
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: 1.5rem;
+    font-weight: 800;
     text-transform: uppercase;
-    color: var(--color-texto-suave);
 }
 
-.panel p {
-    margin: 0 0 24px;
-}
-
-.lista-controles {
-    margin: 0 0 24px;
+/* Vacío no se ve, pero sigue en la página: así role="status" anuncia el texto al llegar */
+.mensaje-partida:empty {
     padding: 0;
-    list-style: none;
+    border: 0;
+    box-shadow: none;
 }
 
-.lista-controles li {
-    padding: 8px 0;
-    border-top: 1px solid var(--color-muro);
-}
-
-kbd {
-    display: inline-block;
-    min-width: 2em;
-    margin-right: 8px;
-    padding: 2px 6px;
-    border: 1px solid var(--color-piedra-borde);
-    border-radius: 6px;
-    background-color: var(--color-muro);
-    font-family: inherit;
+/* ---------- Teclas: indicadores del teclado ---------- */
+.controles {
+    grid-area: controles;
+    justify-self: center;
     text-align: center;
 }
 
-.nota {
+.titulo-controles {
+    margin: 0 0 12px;
     font-size: 0.9rem;
-    color: var(--color-texto-suave);
+    font-weight: 600;
+    color: var(--color-tinta-suave);
 }
+
+/* ↑ ocupa las dos columnas de arriba; ← y → van debajo */
+.teclas {
+    display: grid;
+    grid-template-columns: 48px 48px;
+    gap: 8px;
+    justify-content: center;
+}
+
+.tecla-arriba {
+    grid-column: 1 / -1;
+    justify-self: center;
+}
+
+.tecla {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--color-tinta);
+    background-color: var(--color-tecla);
+    /* la sombra sólida inferior es el grosor de la tecla */
+    box-shadow: 0 4px 0 var(--color-tinta);
+    font-family: inherit;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Pulsada: baja lo mismo que medía su grosor y pierde la sombra */
+.tecla.pulsada {
+    transform: translateY(4px);
+    box-shadow: none;
+    background-color: #d9d4c4;
+}
+
+/* Texto solo para lectores de pantalla: existe, pero no ocupa sitio en pantalla */
+.solo-lector {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* ---------- Efectos decorativos ---------- */
+/* Solo si el usuario no ha pedido reducir el movimiento */
+@media (prefers-reduced-motion: no-preference) {
+    /* Al despegar, el dibujo se queda un píxel (2px) abajo durante 0,1 s:
+       un impulso que no deforma el pixel art */
+    .en-el-aire .sprite-personaje {
+        animation: despegar 0.1s steps(1);
+    }
+
+    /* La transición solo está en .oculto: desaparece suave y reaparece al instante */
+    .personaje.oculto {
+        transition: opacity 0.3s ease-out;
+    }
+
+    .mensaje-partida:not(:empty) {
+        animation: aparecer 0.25s ease-out;
+    }
+}
+
+@keyframes despegar {
+    from { transform: translateY(2px); }
+    to { transform: none; }
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: none; }
+}
+

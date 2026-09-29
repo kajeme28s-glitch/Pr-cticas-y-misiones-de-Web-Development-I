@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 238 298" width="476" height="596" shape-rendering="crispEdges">
+  <!-- CLAIM the TOWER: fondo original en pixel art.
+       1 unidad = 1 píxel de dibujo = 2 px del juego, igual que el caballero y la puerta.
+       Mide lo mismo que el interior del juego (476x596), así la cuadrícula coincide.
+       Luz desde arriba a la izquierda (el sol). Solo decoración: las superficies
+       jugables son los elementos del HTML. -->
+  <defs>
+    <!-- Sillares: bloques de 20x10 en hileras desplazadas.
+         Brillo arriba e izquierda; junta (sombra) abajo y derecha. -->
+    <pattern id="sillares" width="40" height="20" patternUnits="userSpaceOnUse">
+      <rect width="40" height="20" fill="#cdb898"/>
+      <rect width="40" height="1" fill="#e3d3b3"/>
+      <rect y="10" width="40" height="1" fill="#e3d3b3"/>
+      <rect y="1" width="1" height="8" fill="#e3d3b3"/>
+      <rect x="20" y="1" width="1" height="8" fill="#e3d3b3"/>
+      <rect x="10" y="11" width="1" height="8" fill="#e3d3b3"/>
+      <rect x="30" y="11" width="1" height="8" fill="#e3d3b3"/>
+      <rect y="9" width="40" height="1" fill="#b39d7a"/>
+      <rect y="19" width="40" height="1" fill="#b39d7a"/>
+      <rect x="19" width="1" height="9" fill="#b39d7a"/>
+      <rect x="39" width="1" height="9" fill="#b39d7a"/>
+      <rect x="9" y="10" width="1" height="9" fill="#b39d7a"/>
+      <rect x="29" y="10" width="1" height="9" fill="#b39d7a"/>
+    </pattern>
+    <!-- Bloques de las columnas: la misma piedra y la misma luz -->
+    <pattern id="columna" width="12" height="16" patternUnits="userSpaceOnUse">
+      <rect width="12" height="16" fill="#cdb898"/>
+      <rect width="12" height="1" fill="#e3d3b3"/>
+      <rect y="1" width="1" height="14" fill="#e3d3b3"/>
+      <rect x="10" y="1" width="2" height="14" fill="#b39d7a"/>
+      <rect y="15" width="12" height="1" fill="#8f7a5a"/>
+    </pattern>
+  </defs>
+
+  <!-- Cielo de día: tres franjas planas, más claro hacia el horizonte -->
+  <rect width="238" height="298" fill="#cbe8ef"/>
+  <rect width="238" height="88" fill="#b7dfeb"/>
+  <rect width="238" height="36" fill="#a6d6e8"/>
+
+  <!-- Sol: círculo escalonado con brillo arriba a la izquierda -->
+  <rect x="10" y="6" width="8" height="18" fill="#ffd97a"/>
+  <rect x="8" y="7" width="12" height="16" fill="#ffd97a"/>
+  <rect x="7" y="8" width="14" height="14" fill="#ffd97a"/>
+  <rect x="6" y="10" width="16" height="10" fill="#ffd97a"/>
+  <rect x="10" y="7" width="7" height="15" fill="#fff3d6"/>
+  <rect x="8" y="9" width="11" height="11" fill="#fff3d6"/>
+  <rect x="7" y="11" width="13" height="7" fill="#fff3d6"/>
+
+  <!-- Nubes: escalonadas, con una fila de sombra debajo -->
+  <rect x="0" y="54" width="24" height="4" fill="#f3faf9"/>
+  <rect x="3" y="51" width="14" height="3" fill="#f3faf9"/>
+  <rect x="6" y="49" width="7" height="2" fill="#f3faf9"/>
+  <rect x="0" y="58" width="24" height="1" fill="#d6eaef"/>
+  <rect x="212" y="25" width="26" height="4" fill="#f3faf9"/>
+  <rect x="216" y="22" width="16" height="3" fill="#f3faf9"/>
+  <rect x="220" y="20" width="8" height="2" fill="#f3faf9"/>
+  <rect x="212" y="29" width="26" height="1" fill="#d6eaef"/>
+  <rect x="210" y="108" width="22" height="3" fill="#f3faf9"/>
+  <rect x="214" y="106" width="10" height="2" fill="#f3faf9"/>
+  <rect x="210" y="111" width="22" height="1" fill="#d6eaef"/>
+
+  <!-- Colinas lejanas (verde claro y apagado por la distancia) -->
+  <rect x="0" y="199" width="31" height="99" fill="#b5d39a"/>
+  <rect x="0" y="193" width="18" height="6" fill="#b5d39a"/>
+  <rect x="0" y="190" width="10" height="3" fill="#b5d39a"/>
+  <rect x="207" y="183" width="31" height="115" fill="#b5d39a"/>
+  <rect x="219" y="177" width="19" height="6" fill="#b5d39a"/>
+  <rect x="228" y="174" width="10" height="3" fill="#b5d39a"/>
+
+  <!-- Colinas cercanas: borde superior iluminado -->
+  <rect x="0" y="235" width="31" height="63" fill="#6fa03f"/>
+  <rect x="0" y="231" width="20" height="4" fill="#6fa03f"/>
+  <rect x="0" y="231" width="20" height="1" fill="#9cc85e"/>
+  <rect x="20" y="235" width="11" height="1" fill="#9cc85e"/>
+  <rect x="207" y="223" width="31" height="75" fill="#6fa03f"/>
+  <rect x="217" y="219" width="21" height="4" fill="#6fa03f"/>
+  <rect x="217" y="219" width="21" height="1" fill="#9cc85e"/>
+  <rect x="207" y="223" width="10" height="1" fill="#9cc85e"/>
+
+  <!-- Árboles: copa escalonada con luz arriba a la izquierda y sombra abajo a la derecha -->
+  <rect x="14" y="231" width="2" height="6" fill="#6b5a43"/>
+  <rect x="10" y="217" width="10" height="14" fill="#4d7a2e"/>
+  <rect x="8" y="219" width="14" height="10" fill="#4d7a2e"/>
+  <rect x="10" y="217" width="8" height="11" fill="#6fa03f"/>
+  <rect x="8" y="219" width="10" height="8" fill="#6fa03f"/>
+  <rect x="10" y="218" width="4" height="3" fill="#9cc85e"/>
+  <rect x="226" y="213" width="2" height="6" fill="#6b5a43"/>
+  <rect x="222" y="199" width="10" height="14" fill="#4d7a2e"/>
+  <rect x="220" y="201" width="14" height="10" fill="#4d7a2e"/>
+  <rect x="222" y="199" width="8" height="11" fill="#6fa03f"/>
+  <rect x="220" y="201" width="10" height="8" fill="#6fa03f"/>
+  <rect x="222" y="200" width="4" height="3" fill="#9cc85e"/>
+
+  <!-- Muro de la torre y sus bordes (sombra de 1 píxel) -->
+  <rect x="32" width="174" height="298" fill="url(#sillares)"/>
+  <rect x="31" width="1" height="298" fill="#8f7a5a"/>
+  <rect x="206" width="1" height="298" fill="#8f7a5a"/>
+
+  <!-- Columnas en los extremos, como en la referencia -->
+  <rect x="32" width="12" height="298" fill="url(#columna)"/>
+  <rect x="194" width="12" height="298" fill="url(#columna)"/>
+
+  <!-- Saeteras: ranura oscura con arco escalonado y brillo a la izquierda (sin repisa) -->
+  <rect x="119" y="80" width="4" height="14" fill="#6b5a43"/>
+  <rect x="120" y="79" width="2" height="1" fill="#6b5a43"/>
+  <rect x="120" y="81" width="2" height="12" fill="#2e2620"/>
+  <rect x="118" y="80" width="1" height="14" fill="#e3d3b3"/>
+  <rect x="71" y="184" width="4" height="14" fill="#6b5a43"/>
+  <rect x="72" y="183" width="2" height="1" fill="#6b5a43"/>
+  <rect x="72" y="185" width="2" height="12" fill="#2e2620"/>
+  <rect x="70" y="184" width="1" height="14" fill="#e3d3b3"/>
+  <rect x="167" y="236" width="4" height="14" fill="#6b5a43"/>
+  <rect x="168" y="235" width="2" height="1" fill="#6b5a43"/>
+  <rect x="168" y="237" width="2" height="12" fill="#2e2620"/>
+  <rect x="166" y="236" width="1" height="14" fill="#e3d3b3"/>
+
+  <!-- Hiedra: tallo de 1 píxel y hojas de 2x2 en dos verdes -->
+  <rect x="37" y="0" width="1" height="54" fill="#4d7a2e"/>
+  <rect x="35" y="6" width="2" height="2" fill="#6fa03f"/>
+  <rect x="38" y="13" width="2" height="2" fill="#9cc85e"/>
+  <rect x="35" y="21" width="2" height="2" fill="#9cc85e"/>
+  <rect x="38" y="29" width="2" height="2" fill="#6fa03f"/>
+  <rect x="35" y="37" width="2" height="2" fill="#6fa03f"/>
+  <rect x="38" y="45" width="2" height="2" fill="#9cc85e"/>
+  <rect x="35" y="52" width="2" height="2" fill="#9cc85e"/>
+  <rect x="201" y="0" width="1" height="28" fill="#4d7a2e"/>
+  <rect x="199" y="8" width="2" height="2" fill="#9cc85e"/>
+  <rect x="202" y="16" width="2" height="2" fill="#6fa03f"/>
+  <rect x="199" y="25" width="2" height="2" fill="#9cc85e"/>
+
+  <!-- Musgo en algunas juntas -->
+  <rect x="59" y="129" width="4" height="1" fill="#9cc85e"/>
+  <rect x="143" y="169" width="5" height="1" fill="#9cc85e"/>
+  <rect x="103" y="49" width="4" height="1" fill="#9cc85e"/>
+  <rect x="175" y="69" width="3" height="1" fill="#9cc85e"/>
+  <rect x="51" y="249" width="4" height="1" fill="#9cc85e"/>
+
+  <!-- Musgo al pie del muro: escalonado, con la parte alta iluminada -->
+  <rect x="32" y="270" width="22" height="8" fill="#6fa03f"/>
+  <rect x="34" y="266" width="12" height="4" fill="#6fa03f"/>
+  <rect x="34" y="266" width="12" height="1" fill="#9cc85e"/>
+  <rect x="46" y="270" width="8" height="1" fill="#9cc85e"/>
+  <rect x="32" y="270" width="2" height="1" fill="#9cc85e"/>
+  <rect x="88" y="272" width="16" height="6" fill="#6fa03f"/>
+  <rect x="88" y="272" width="16" height="1" fill="#9cc85e"/>
+  <rect x="136" y="270" width="10" height="8" fill="#6fa03f"/>
+  <rect x="136" y="270" width="10" height="1" fill="#9cc85e"/>
+  <rect x="180" y="268" width="26" height="10" fill="#6fa03f"/>
+  <rect x="190" y="264" width="12" height="4" fill="#6fa03f"/>
+  <rect x="190" y="264" width="12" height="1" fill="#9cc85e"/>
+  <rect x="180" y="268" width="10" height="1" fill="#9cc85e"/>
+  <rect x="202" y="268" width="4" height="1" fill="#9cc85e"/>
+</svg>
