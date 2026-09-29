@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sube la torre</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header class="cabecera">
+        <p class="aviso-prototipo">Prototipo estático: todavía no se puede jugar</p>
+        <h1>Sube la torre</h1>
+        <p class="subtitulo">Salta de plataforma en plataforma hasta alcanzar la luz de la cima.</p>
+    </header>
+
+    <main class="contenido">
+        <div class="marco-juego">
+            <div class="zona-juego" role="img" aria-label="Escenario de la torre: el personaje espera en el suelo, cinco plataformas de piedra suben en zigzag y una luz brilla en la plataforma de la cima.">
+                <div class="suelo"></div>
+
+                <div class="plataforma plataforma-1"></div>
+                <div class="plataforma plataforma-2"></div>
+                <div class="plataforma plataforma-3"></div>
+                <div class="plataforma plataforma-4"></div>
+                <div class="plataforma plataforma-5"></div>
+                <div class="plataforma plataforma-cima"></div>
+
+                <div class="meta"></div>
+                <div class="personaje"></div>
+            </div>
+        </div>
+
+        <aside class="panel">
+            <h2>Controles</h2>
+            <ul class="lista-controles">
+                <li><kbd>←</kbd> Flecha izquierda: moverse a la izquierda</li>
+                <li><kbd>→</kbd> Flecha derecha: moverse a la derecha</li>
+                <li><kbd>↑</kbd> Flecha arriba: saltar</li>
+            </ul>
+
+            <h2>Objetivo</h2>
+            <p>Sube por las plataformas y alcanza la luz de la cima.</p>
+
+            <p class="nota">Los controles se activarán en las próximas fases.</p>
+        </aside>
+    </main>
+</body>
+</html>

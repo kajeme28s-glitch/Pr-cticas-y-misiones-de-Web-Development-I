@@ -1,0 +1,244 @@
+/* Sube la torre. Fase 1: escenario estático */
+
+/* ---------- Variables ---------- */
+:root {
+    color-scheme: dark;
+
+    /* Colores: neutros fríos de piedra y un único acento (la luz) */
+    --color-cielo: #0f1420;
+    --color-cielo-claro: #1c2335;
+    --color-muro: #2b303b;
+    --color-muro-oscuro: #1f232c;
+    --color-junta: #171a21;
+    --color-piedra: #646973;
+    --color-piedra-borde: #8b909a;
+    --color-suelo: #3a3f4a;
+    --color-personaje: #b9c6d8;
+    --color-texto: #e6e8ec;
+    --color-texto-suave: #a9aeb8;
+    --color-luz: #f2b441;
+
+    /* Medidas del escenario (en píxeles) */
+    --ancho-juego: 480px;
+    --alto-juego: 600px;
+    --alto-suelo: 40px;
+    --alto-plataforma: 16px;
+}
+
+/* ---------- Página ---------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 32px 16px;
+    font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+    color: var(--color-texto);
+    background-color: var(--color-cielo);
+    background-image: radial-gradient(circle at 50% 0%, var(--color-cielo-claro), var(--color-cielo) 60%);
+}
+
+.cabecera,
+.contenido {
+    max-width: 840px;
+    margin: 0 auto;
+}
+
+.cabecera {
+    margin-bottom: 24px;
+}
+
+.aviso-prototipo {
+    display: inline-block;
+    margin: 0 0 12px;
+    padding: 4px 10px;
+    border: 1px solid var(--color-luz);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-luz);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.25rem;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+}
+
+.subtitulo {
+    margin: 8px 0 0;
+    color: var(--color-texto-suave);
+}
+
+/* Móvil primero: una columna. En pantallas anchas, juego a la izquierda y panel a la derecha */
+.contenido {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+}
+
+@media (min-width: 800px) {
+    .contenido {
+        grid-template-columns: var(--ancho-juego) 1fr;
+        align-items: start;
+    }
+}
+
+/* Si la pantalla es más estrecha que el juego, se desplaza solo este marco, no la página */
+.marco-juego {
+    overflow-x: auto;
+}
+
+/* ---------- Zona de juego ---------- */
+/*
+   La zona de juego es la "caja de referencia": tiene position: relative.
+   Todo lo que hay dentro tiene position: absolute, así que sus valores
+   left y bottom se miden desde la esquina inferior izquierda de esta caja.
+*/
+.zona-juego {
+    position: relative;
+    width: var(--ancho-juego);
+    height: var(--alto-juego);
+    overflow: hidden;
+    border: 2px solid var(--color-piedra);
+    border-radius: 6px;
+    background-color: var(--color-muro);
+    background-image:
+        /* resplandor de la luz de la cima */
+        radial-gradient(circle at 76% 6%, rgba(242, 180, 65, 0.18), transparent 35%),
+        /* juntas horizontales entre hileras de piedra: 38px de piedra + 2px de junta */
+        repeating-linear-gradient(to bottom, transparent 0 38px, var(--color-junta) 38px 40px),
+        /* el muro se oscurece hacia arriba */
+        linear-gradient(to top, var(--color-muro), var(--color-muro-oscuro));
+}
+
+.suelo {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: var(--alto-suelo);
+    background-color: var(--color-suelo);
+    border-top: 3px solid var(--color-piedra-borde);
+}
+
+/* Estilo común de todas las plataformas */
+.plataforma {
+    position: absolute;
+    width: 110px;
+    height: var(--alto-plataforma);
+    background-color: var(--color-piedra);
+    border-top: 3px solid var(--color-piedra-borde);
+    border-radius: 3px;
+    /* sombra sólida debajo: la plataforma parece un bloque con grosor */
+    box-shadow: 0 6px 0 var(--color-junta);
+}
+
+/* Posición de cada plataforma: zigzag, subiendo 80px cada vez */
+.plataforma-1 { left: 180px; bottom: 120px; }
+.plataforma-2 { left: 330px; bottom: 200px; }
+.plataforma-3 { left: 100px; bottom: 280px; }
+.plataforma-4 { left: 310px; bottom: 360px; }
+.plataforma-5 { left: 70px;  bottom: 440px; }
+
+.plataforma-cima {
+    left: 250px;
+    bottom: 520px;
+    width: 160px;
+}
+
+/* Meta: la luz, centrada sobre la plataforma de la cima.
+   left = 250 + (160 - 24) / 2 = 318px
+   bottom = 520 + 16 (alto de la plataforma) = 536px */
+.meta {
+    position: absolute;
+    left: 318px;
+    bottom: 536px;
+    width: 24px;
+    height: 36px;
+    border-radius: 12px 12px 6px 6px;
+    background-image: radial-gradient(circle at 50% 60%, #fff3d6, var(--color-luz) 70%);
+    box-shadow: 0 0 24px 6px rgba(242, 180, 65, 0.45);
+}
+
+/* Personaje: de pie sobre el suelo, así que su bottom es el alto del suelo */
+.personaje {
+    position: absolute;
+    left: 40px;
+    bottom: var(--alto-suelo);
+    width: 28px;
+    height: 40px;
+    background-color: var(--color-personaje);
+    border-radius: 8px 8px 3px 3px;
+}
+
+/* Visera del casco: un rectángulo oscuro dibujado con ::after */
+.personaje::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 6px;
+    width: 16px;
+    height: 5px;
+    border-radius: 2px;
+    background-color: var(--color-cielo);
+}
+
+/* Parpadeo suave de la luz, solo si el usuario no ha pedido reducir el movimiento */
+@media (prefers-reduced-motion: no-preference) {
+    .meta {
+        animation: parpadeo 2.4s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes parpadeo {
+    from { opacity: 1; }
+    to { opacity: 0.8; }
+}
+
+/* ---------- Panel lateral ---------- */
+.panel h2 {
+    margin: 0 0 12px;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-texto-suave);
+}
+
+.panel p {
+    margin: 0 0 24px;
+}
+
+.lista-controles {
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+}
+
+.lista-controles li {
+    padding: 8px 0;
+    border-top: 1px solid var(--color-muro);
+}
+
+kbd {
+    display: inline-block;
+    min-width: 2em;
+    margin-right: 8px;
+    padding: 2px 6px;
+    border: 1px solid var(--color-piedra-borde);
+    border-radius: 6px;
+    background-color: var(--color-muro);
+    font-family: inherit;
+    text-align: center;
+}
+
+.nota {
+    font-size: 0.9rem;
+    color: var(--color-texto-suave);
+}
