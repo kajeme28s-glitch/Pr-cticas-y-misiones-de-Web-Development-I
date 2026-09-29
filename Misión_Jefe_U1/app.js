@@ -10,6 +10,7 @@ const personaje = document.querySelector(".personaje");
 const meta = document.querySelector(".meta");
 const mensajePartida = document.querySelector(".mensaje-partida");
 const botonReiniciar = document.querySelector(".boton-reiniciar");
+const botonTema = document.querySelector(".boton-tema");
 
 // Dibujo de cada flecha en pantalla, con el mismo nombre que evento.key.
 const indicadores = {
@@ -49,7 +50,7 @@ const teclasPulsadas = {
     ArrowLeft: false,
     ArrowRight: false
 };
-
+//Marca para saber cuanto paso entre un frame y otro(para adaptarse a cualquier monitor)
 let tiempoAnterior = performance.now();
 
 // Suelta todas las flechas: las laterales dejan de mover y los dibujos se levantan.
@@ -76,7 +77,7 @@ window.addEventListener("keydown", function (evento) {
         evento.preventDefault();
         // evento.repeat es true cuando la tecla se mantiene pulsada:
         // así, mantener ↑ solo produce un salto.
-        if (enSuelo && !evento.repeat && !partidaTerminada) {
+        if (enSuelo && !partidaTerminada) {
             velocidadY = fuerzaSalto;
             enSuelo = false;
         }
@@ -197,6 +198,11 @@ function reiniciar() {
 }
 
 botonReiniciar.addEventListener("click", reiniciar);
+
+botonTema.addEventListener("click", function () {
+    const modoOscuro = document.body.classList.toggle("modo-oscuro");
+    botonTema.textContent = modoOscuro ? "Modo claro" : "Modo oscuro";
+});
 
 function actualizar(tiempoActual) {
     // Segundos desde el fotograma anterior.

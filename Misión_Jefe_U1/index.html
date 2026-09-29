@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
 </head>
+
 <body>
     <main class="pagina">
         <h1 class="titulo">Claim <span class="titulo-the">the</span> Tower</h1>
@@ -15,7 +17,7 @@
         <div class="marco-juego">
             <!-- .escenario agrupa el juego y el mensaje, que se superpone sin mover nada -->
             <div class="escenario">
-                <div class="zona-juego" role="img" aria-label="Torre de piedra al sol: un caballero espera en la hierba, las plataformas suben en zigzag y en la cima hay una puerta con luz dorada.">
+                <div class="zona-juego" role="img">
                     <div class="suelo"></div>
 
                     <div class="plataforma plataforma-1"></div>
@@ -29,7 +31,7 @@
 
                     <!-- .personaje es la caja de la física; la imagen solo es su dibujo -->
                     <div class="personaje">
-                        <img class="sprite-personaje" src="assets/caballero.svg" alt="" width="28" height="40">
+                        <img class="sprite-personaje" src="assets/caballero.svg" width="28" height="40">
                     </div>
                 </div>
 
@@ -38,16 +40,18 @@
         </div>
 
         <!-- Indicadores del teclado físico: se hunden al pulsar la flecha. No son botones -->
-        <section class="controles" aria-labelledby="titulo-controles">
-            <h2 class="titulo-controles" id="titulo-controles">Mover / Saltar</h2>
+        <section class="controles">
+            <h2 class="titulo-controles">Mover / Saltar</h2>
             <div class="teclas">
-                <kbd class="tecla tecla-arriba"><span aria-hidden="true">↑</span><span class="solo-lector">Flecha arriba: saltar</span></kbd>
-                <kbd class="tecla tecla-izquierda"><span aria-hidden="true">←</span><span class="solo-lector">Flecha izquierda: moverse a la izquierda</span></kbd>
-                <kbd class="tecla tecla-derecha"><span aria-hidden="true">→</span><span class="solo-lector">Flecha derecha: moverse a la derecha</span></kbd>
+                <kbd class="tecla tecla-arriba">↑</kbd>
+                <kbd class="tecla tecla-izquierda">←</kbd>
+                <kbd class="tecla tecla-derecha">→</kbd>
             </div>
+            <button type="button" class="boton-tema">Modo oscuro</button>
         </section>
 
         <button type="button" class="boton-reiniciar">Reiniciar</button>
     </main>
 </body>
+
 </html>
