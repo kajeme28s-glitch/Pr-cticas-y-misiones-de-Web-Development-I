@@ -26,26 +26,27 @@ HTML, CSS y JavaScript puro. No se utilizan frameworks ni librerías externas.
 
 ## Uso de IA
 
-> Completar con experiencias reales antes de entregar.
+> Practicamente el 90% del trabajo es con IA, yo no he escrito demasiado código, solo en las fases de corrección y dudas sobre funciones que no entendia o que no me gustaba su implementación.
 
-- Herramienta o herramientas utilizadas: `[completar]`.
-- Partes en las que ayudó la IA: `[completar]`.
-- Prompt real relevante 1: `[pegar prompt]`.
-- Prompt real relevante 2: `[pegar prompt, si procede]`.
-- Qué comprobé personalmente: `[completar con pruebas realizadas]`.
-- Qué escribí o cambié manualmente: `[completar]`.
+>He revisado linea por linea y he dejado los comentarios ya que tambíen ayudan ami comprensión.No hice algo complicado porque estoy probando un entorno nuevo juntando Claude y Codex para la realización y no es que me sobren los tokkens.
 
-## Autopsia
+- Herramienta o herramientas utilizadas: `Claude CLI con Opu5.5(y 11 Skill) y Codex con Astra6 `.
+- Partes en las que ayudó la IA: `Todo`.
 
-> Completar con decisiones reales del proyecto. Explica dos decisiones discutibles y la alternativa que descartaste.
+//ACLARACIÓN: Los prompts importantes son generados por el apartado Work de la Red que tengo montada entre los agentes de un mismo proyecto. Destacaría:
 
-1. Decisión: `[completar]`  
-   Alternativa descartada: `[completar]`  
-   Motivo: `[completar]`
+//PROMPT de explicación y paso de fuentes.
 
-2. Decisión: `[completar]`  
-   Alternativa descartada: `[completar]`  
-   Motivo: `[completar]`
+- Prompt real relevante 1: `Vale vamos a empezar con el proyecto , tenemos el temario del tema 1 y la guia de la mision que crearemos la carpeta de Misión_Jefe_U1 para hacerla. quiero codigo sencillo y facil de entender además de un apartado grafico bonito utilizando las skills de claude. lo primero quiero que me expliques los puntos obligatorios del proyecto y los opcionales`. 
+
+//PROMPTs de desarrollo inicial de idea del proyecto.
+
+- Prompt real relevante 2: `vale me gestaría hacer un juego un subir la torre , algo sencillo movimiento con las flechas del teclado se salta y va e lado a lado`.
+- Prompt real relevante 3: `vale me gusta , vamos haciendo losprompts para el flujo con claude y codex`
+
+
+- Qué comprobé personalmente: `Comprobé cada linea a mano con asistencia por voz para intentar entender todo y que estuviese a mi alcance`.
+- Qué escribí o cambié manualmente: `Realmente cambié varias funciones y parametros,porque elimine todos los apartados de lectura para ciegos. Ya que la ia añadió todo un sistema en HTML y CSS para permitir lectura de pantalla`.
 
 ## Comprobaciones antes de entregar
 
