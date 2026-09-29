@@ -226,6 +226,11 @@ h1 {
     border-top: 1px solid var(--color-muro);
 }
 
+/* Controles que aún no funcionan: más apagados */
+.pendiente {
+    color: var(--color-texto-suave);
+}
+
 kbd {
     display: inline-block;
     min-width: 2em;
