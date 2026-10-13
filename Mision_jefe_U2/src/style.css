@@ -1,3 +1,5 @@
+/* Estilo claro con colores pastel */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,13 +7,18 @@
 }
 
 :root {
-  --fondo: #140f24;
-  --caja: #221a3a;
-  --texto: #ece8f8;
-  --suave: #a99fc9;
-  --violeta: #b48cff;
-  --dorado: #f2c66d;
-  --rojo: #ff8a8a;
+  --fondo: #f6f3fb;      /* lavanda muy clara */
+  --tarjeta: #ffffff;
+  --texto: #2d2a3e;      /* casi negro: buen contraste */
+  --texto-suave: #6b6880;
+  --borde: #e3ddf0;
+  --lavanda: #cdbdf5;    /* botón */
+  --lavanda-hover: #bba6f0;
+  --foco: #7c5cd6;
+  --menta: #dff3ea;      /* resultado */
+  --menta-texto: #1f5c45;
+  --rosa: #fde2e4;       /* error */
+  --rosa-texto: #9b2c3a;
 }
 
 body {
@@ -19,38 +26,40 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  padding: 3rem 1rem 1.5rem;
-  background: radial-gradient(circle at top, #2c1f52, var(--fondo) 60%);
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem 1rem;
+  background: var(--fondo);
   color: var(--texto);
   font-family: system-ui, sans-serif;
-  text-align: center;
+  font-size: 1rem;
 }
 
-.bola {
-  font-size: 3.5rem;
+.tarjeta {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem 1.5rem;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(45, 42, 62, 0.06);
 }
 
 h1 {
-  color: var(--dorado);
-  font-size: 2.2rem;
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
-.subtitulo,
-footer {
-  color: var(--suave);
-}
-
-main {
-  flex: 1;
-  width: 100%;
-  max-width: 460px;
+.subtitulo {
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--texto-suave);
 }
 
 label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .fila {
@@ -60,46 +69,75 @@ label {
 
 input {
   flex: 1;
-  padding: 0.8rem;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 1rem;
   font-size: 1rem;
   color: var(--texto);
-  background: var(--caja);
-  border: 1px solid #3d3166;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
   border-radius: 12px;
 }
 
 button {
-  padding: 0.8rem 1.4rem;
+  min-height: 48px;
+  padding: 0 1.5rem;
   font-size: 1rem;
-  font-weight: bold;
-  background: var(--violeta);
+  font-weight: 600;
+  color: var(--texto);
+  background: var(--lavanda);
   border: none;
   border-radius: 12px;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: var(--lavanda-hover);
 }
 
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Anillo de foco visible al navegar con teclado */
+input:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+/* El mensaje no ocupa sitio mientras está vacío */
+.mensaje:empty {
+  display: none;
 }
 
 .mensaje {
-  margin-top: 2rem;
-  color: var(--suave);
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  color: var(--texto-suave);
+  text-align: center;
 }
 
 .mensaje.resultado {
-  padding: 2rem 1rem;
-  background: var(--caja);
-  border-radius: 12px;
-  color: var(--dorado);
-  font-size: 1.6rem;
-  font-weight: bold;
+  background: var(--menta);
+  color: var(--menta-texto);
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 .mensaje.error {
-  color: var(--rojo);
+  background: var(--rosa);
+  color: var(--rosa-texto);
+}
+
+footer {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
 }
 
 footer a {
-  color: var(--violeta);
+  color: var(--foco);
 }

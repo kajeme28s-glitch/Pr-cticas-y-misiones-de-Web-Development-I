@@ -7,23 +7,20 @@
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <header>
-      <p class="bola">🔮</p>
+    <main class="tarjeta">
       <h1>El Adivino de Edades</h1>
       <p class="subtitulo">Dime tu nombre y adivinaré tu edad</p>
-    </header>
 
-    <main>
       <form id="formulario">
         <label for="nombre">Introduce tu nombre</label>
         <div class="fila">
-          <input id="nombre" type="text" placeholder="Por ejemplo: Lucía" />
+          <input id="nombre" type="text" placeholder="Por ejemplo: Lucía" autocomplete="off" />
           <button id="boton" type="submit">Enter</button>
         </div>
       </form>
 
-      <!-- Aquí se escribe la carga, el error o la edad -->
-      <p id="mensaje" class="mensaje"></p>
+      <!-- Aquí se escribe la carga, el error o la edad. aria-live lo lee en voz alta a lectores de pantalla -->
+      <p id="mensaje" class="mensaje" aria-live="polite"></p>
     </main>
 
     <footer>

@@ -1,8 +1,21 @@
-// cache.js — ★ RETO BONUS: caché en localStorage
-// Responsabilidad: guardar/leer respuestas ya pedidas para no repetir fetch.
-// - localStorage solo guarda texto → JSON.stringify / JSON.parse
-// - Envolver en try/catch (JSON corrupto, almacenamiento lleno o bloqueado)
-// - Opcional: guardar fecha para caducar la caché
+// cache.js — Se encarga SOLO de guardar y leer respuestas en localStorage.
+// Así no repetimos peticiones (la API gratuita limita las consultas).
+// Se guarda un objeto así: { "lucia": { name, age, count }, "pedro": {...} }
 
-// TODO: export function leerCache(clave) { ... }
-// TODO: export function guardarCache(clave, datos) { ... }
+const CLAVE = "adivino-cache";
+
+export function leerCache() {
+  // try/catch: si lo guardado está corrupto, JSON.parse lanzaría error
+  try {
+    return JSON.parse(localStorage.getItem(CLAVE)) ?? {};
+  } catch {
+    return {};
+  }
+}
+
+export function guardarEnCache(nombre, datos) {
+  const cache = leerCache();
+  cache[nombre] = datos;
+  // localStorage solo guarda texto → JSON.stringify
+  localStorage.setItem(CLAVE, JSON.stringify(cache));
+}
