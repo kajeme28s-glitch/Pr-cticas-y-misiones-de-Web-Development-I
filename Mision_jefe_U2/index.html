@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>El Adivino de Edades</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <header>
+      <p class="bola">🔮</p>
+      <h1>El Adivino de Edades</h1>
+      <p class="subtitulo">Dime tu nombre y adivinaré tu edad</p>
+    </header>
+
+    <main>
+      <form id="formulario">
+        <label for="nombre">Introduce tu nombre</label>
+        <div class="fila">
+          <input id="nombre" type="text" placeholder="Por ejemplo: Lucía" />
+          <button id="boton" type="submit">Enter</button>
+        </div>
+      </form>
+
+      <!-- Aquí se escribe la carga, el error o la edad -->
+      <p id="mensaje" class="mensaje"></p>
+    </main>
+
+    <footer>
+      <p>Predicciones de <a href="https://agify.io" target="_blank">Agify.io</a></p>
+    </footer>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

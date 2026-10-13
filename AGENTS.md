@@ -30,3 +30,10 @@ Este archivo contiene la definición de los agentes virtuales especializados que
 ## 🔗 Protocolo de Comunicación
 * Los agentes se comunican de forma asíncrona mediante el archivo `MEMORY.md` y archivos de instrucciones compartidos en `./memory/`.
 * Antes de iniciar cualquier proyecto, los agentes consultan la base de conocimientos y seleccionan las habilidades predefinidas del archivo `SKILLS.md`.
+
+
+## AI Orchestrator local (2026-10-06)
+
+Cuando la tarea procede de ai_orchestrator, leer .ai/PROJECT_CONTEXT.md y .ai/CURRENT_TASK.md, y respetar .ai/DECISIONS.md y las reglas académicas originales. El orquestador asigna el turno exclusivo y entrega la tarea actual; las colas manuales .ai-local/ no sustituyen esta tarea. No tocar el trabajo pendiente de otros.
+Los workers proponen cambios estructurados; el orquestador valida rutas y aplica escrituras. No editar Obsidian directamente, credenciales, configuración de herramientas ni archivos fuera del proyecto. No commit, push ni deploy. Devolver summary, writes, decisions, testsSuggested, verdict e issues. El orquestador ejecuta comprobaciones autorizadas, registra decisiones y resultados en .ai/RESULTS.md y hace revisión cruzada cuando corresponde. Nunca afirmar que una prueba pasó sin evidencia.
+Fuera de tareas de ai_orchestrator se conserva el flujo manual existente.

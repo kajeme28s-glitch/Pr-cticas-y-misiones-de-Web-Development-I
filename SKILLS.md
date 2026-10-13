@@ -40,3 +40,4 @@ Guía de interactividad sin librerías de JS:
 * **Seguridad del DOM**: Asegurarse de que ningún script corra antes de que el árbol DOM esté completamente cargado.
 * **Persistencia**: Usar JSON para serializar colecciones en `localStorage` (ej: `JSON.stringify(lista)` y `JSON.parse(localStorage.getItem(...))`).
 * **Limpieza de código**: Cada función debe hacer una única cosa (ej: `renderNotes` vs `addNote`).
+

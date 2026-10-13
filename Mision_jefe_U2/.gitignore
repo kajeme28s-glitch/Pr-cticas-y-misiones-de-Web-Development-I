@@ -1,0 +1,11 @@
+# Dependencias e instalaciones (se regeneran con npm install)
+node_modules/
+
+# Salida de compilación de Vite (npm run build)
+dist/
+build/
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+*.log
