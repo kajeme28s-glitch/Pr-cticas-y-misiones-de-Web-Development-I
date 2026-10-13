@@ -1,39 +1,42 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>El Adivino de Edades</title>
-    <link rel="stylesheet" href="./src/style.css" />
-  </head>
-  <body>
-    <main class="tarjeta">
-      <h1>El Adivino de Edades</h1>
-      <p class="subtitulo">Dime tu nombre y adivinaré tu edad</p>
 
-      <form id="formulario">
-        <label for="nombre">Introduce tu nombre</label>
-        <div class="fila">
-          <input id="nombre" type="text" placeholder="Por ejemplo: Lucía" autocomplete="off" />
-          <button id="boton" type="submit">Enter</button>
-        </div>
-      </form>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Adivino de Edades</title>
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
 
-      <!-- Aquí se escribe la carga, el error o la edad. aria-live lo lee en voz alta a lectores de pantalla -->
-      <p id="mensaje" class="mensaje" aria-live="polite"></p>
+<body>
+  <main class="tarjeta">
+    <h1>El Adivino de Edades</h1>
+    <p class="subtitulo">Dime tu nombre y adivinaré tu edad</p>
 
-      <!-- Historial: nombres ya consultados (sale de la caché) -->
-      <section id="historial" class="historial" hidden>
-        <h2>Nombres consultados</h2>
-        <ul id="lista-historial"></ul>
-        <p id="media" class="media"></p>
-      </section>
-    </main>
+    <form id="formulario">
+      <label for="nombre">Introduce tu nombre</label>
+      <div class="fila">
+        <input id="nombre" type="text" placeholder="Por ejemplo: Lucía" autocomplete="off" />
+        <button id="boton" type="submit">Enter</button>
+      </div>
+    </form>
 
-    <footer>
-      <p>Predicciones de <a href="https://agify.io" target="_blank">Agify.io</a></p>
-    </footer>
+    <!-- Aquí se escribe la carga, el error o la edad. aria-live lo lee en voz alta a lectores de pantalla -->
+    <p id="mensaje" class="mensaje" aria-live="polite"></p>
 
-    <script type="module" src="./src/main.js"></script>
-  </body>
+    <!-- Historial: nombres ya consultados (sale de la caché) -->
+    <section id="historial" class="historial" hidden>
+      <h2>Nombres consultados</h2>
+      <ul id="lista-historial"></ul>
+      <p id="media" class="media"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Predicciones de <a href="https://agify.io" target="_blank">Agify.io</a></p>
+  </footer>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+
 </html>
