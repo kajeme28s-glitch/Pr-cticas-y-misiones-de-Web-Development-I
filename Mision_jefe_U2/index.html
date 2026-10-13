@@ -21,6 +21,13 @@
 
       <!-- Aquí se escribe la carga, el error o la edad. aria-live lo lee en voz alta a lectores de pantalla -->
       <p id="mensaje" class="mensaje" aria-live="polite"></p>
+
+      <!-- Historial: nombres ya consultados (sale de la caché) -->
+      <section id="historial" class="historial" hidden>
+        <h2>Nombres consultados</h2>
+        <ul id="lista-historial"></ul>
+        <p id="media" class="media"></p>
+      </section>
     </main>
 
     <footer>
