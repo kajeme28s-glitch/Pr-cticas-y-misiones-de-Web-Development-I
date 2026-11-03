@@ -4,7 +4,8 @@ import { crearClave, leerCache, guardarEnCache } from "./cache.js";
 
 const URL_API = "https://api.agify.io";
 
-export async function pedirEdad(nombre, pais) {
+// signal: permite cancelar la petición desde fuera (lo usa el useEffect de App)
+export async function pedirEdad(nombre, pais, signal) {
   const clave = crearClave(nombre, pais);
 
   // 1. Si ya lo preguntamos antes, lo devolvemos sin llamar a la API
@@ -18,7 +19,7 @@ export async function pedirEdad(nombre, pais) {
   if (pais !== "") {
     url += `&country_id=${pais}`;
   }
-  const respuesta = await fetch(url);
+  const respuesta = await fetch(url, { signal });
 
   // fetch no da error si el servidor responde 404, 429, 500...
   // por eso comprobamos response.ok nosotros
