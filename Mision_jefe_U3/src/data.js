@@ -1,5 +1,10 @@
 // data.js — (igual que en la U2) Prepara los datos (sin fetch y sin DOM).
 
+// Clave de la caché: el nombre en minúsculas + el país ("Lucía", "ES" → "lucía|ES")
+export function crearClave(nombre, pais) {
+  return `${nombre.toLowerCase()}|${pais}`;
+}
+
 // Convierte la respuesta de la API en un objeto más claro.
 // ?. y ?? evitan errores si el dato no viene.
 export function crearPersona(datos) {

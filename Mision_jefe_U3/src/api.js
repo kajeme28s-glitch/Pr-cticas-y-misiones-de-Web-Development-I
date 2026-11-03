@@ -1,24 +1,15 @@
-// api.js — (igual que en la U2) Consigue los datos: de la caché o de la API.
-
-import { crearClave, leerCache, guardarEnCache } from "./cache.js";
+// api.js — (como en la U2) Pide la edad a la API de Agify. Solo fetch + async/await.
+// En la U3 ya no mira la caché: de eso se encarga App con el hook useLocalStorage.
 
 const URL_API = "https://api.agify.io";
 
 // signal: permite cancelar la petición desde fuera (lo usa el useEffect de App)
 export async function pedirEdad(nombre, pais, signal) {
-  const clave = crearClave(nombre, pais);
-
-  // 1. Si ya lo preguntamos antes, lo devolvemos sin llamar a la API
-  const guardado = leerCache()[clave];
-  if (guardado) {
-    return guardado;
-  }
-
-  // 2. Si no, lo pedimos a la API (NUEVO en U3: country_id si se eligió país)
   let url = `${URL_API}?name=${encodeURIComponent(nombre)}`;
   if (pais !== "") {
-    url += `&country_id=${pais}`;
+    url += `&country_id=${pais}`; // NUEVO en U3: predicción para un país concreto
   }
+
   const respuesta = await fetch(url, { signal });
 
   // fetch no da error si el servidor responde 404, 429, 500...
@@ -30,7 +21,5 @@ export async function pedirEdad(nombre, pais, signal) {
     throw new Error(`la API respondió con error ${respuesta.status}`);
   }
 
-  const datos = await respuesta.json(); // { name: "lucía", age: 52, count: 123, country_id: "ES" }
-  guardarEnCache(clave, datos);
-  return datos;
+  return respuesta.json(); // { name: "lucía", age: 52, count: 123, country_id: "ES" }
 }

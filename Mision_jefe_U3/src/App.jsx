@@ -5,14 +5,14 @@ import Cabecera from "./components/Cabecera.jsx";
 import FormularioNombre from "./components/FormularioNombre.jsx";
 import Mensaje from "./components/Mensaje.jsx";
 import Historial from "./components/Historial.jsx";
+import { useLocalStorage } from "./hooks/useLocalStorage.js";
 import { pedirEdad } from "./api.js";
-import { crearClave, leerCache } from "./cache.js";
-import { crearPersona, crearHistorial, conEdad, edadMedia } from "./data.js";
+import { crearClave, crearPersona, crearHistorial, conEdad, edadMedia } from "./data.js";
 
 export default function App() {
   // --- ESTADO (solo lo que no se puede calcular) ---
   const [busqueda, setBusqueda] = useState(null); // { nombre, pais } o null
-  const [cache, setCache] = useState(leerCache); // respuestas guardadas (empieza con lo de localStorage)
+  const [cache, setCache] = useLocalStorage("adivino-cache", {}); // respuestas guardadas (custom hook)
   const [error, setError] = useState(null); // texto del error o null
 
   // --- VALORES DERIVADOS (se recalculan en cada render, no son estado) ---
@@ -24,18 +24,17 @@ export default function App() {
   const personas = conEdad(crearHistorial(cache)); // map + filter
   const media = edadMedia(personas); // reduce
 
-  // --- EFECTO: cuando cambia la búsqueda, pide la edad (caché o API) ---
+  // --- EFECTO: si hay búsqueda y no está en la caché, se pide a la API ---
   useEffect(() => {
-    if (busqueda === null) return; // todavía no se ha buscado nada
+    if (busqueda === null || datos !== undefined) return; // nada que buscar o ya está guardado
 
     const controlador = new AbortController();
 
     async function consultar() {
       try {
         const nuevosDatos = await pedirEdad(busqueda.nombre, busqueda.pais, controlador.signal);
-        const claveNueva = crearClave(busqueda.nombre, busqueda.pais);
         // Actualización inmutable con función actualizadora: copia de lo anterior + dato nuevo
-        setCache((anterior) => ({ ...anterior, [claveNueva]: nuevosDatos }));
+        setCache((anterior) => ({ ...anterior, [clave]: nuevosDatos }));
       } catch (err) {
         if (err.name !== "AbortError") {
           setError(err.message); // cancelar no es un error: solo mostramos los fallos reales
@@ -46,7 +45,7 @@ export default function App() {
 
     // LIMPIEZA: si cambia la búsqueda antes de que llegue la respuesta, se cancela la vieja
     return () => controlador.abort();
-  }, [busqueda]); // se ejecuta cada vez que el usuario hace una búsqueda nueva
+  }, [busqueda, clave, datos, setCache]); // todo lo que usa el efecto y viene del componente
 
   // Se la pasamos al formulario: cuando el usuario pulsa Enter, cambia la búsqueda
   function buscar(nombre, pais) {
