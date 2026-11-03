@@ -1,0 +1,15 @@
+{
+  "name": "mision-jefe-u2-async-odyssey",
+  "private": true,
+  "version": "0.1.0",
+  "description": "M2 · Async Odyssey — app con Vite que consume una API pública con fetch + async/await",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}
