@@ -1,0 +1,228 @@
+/* Estilo claro con colores pastel */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --fondo: #f6f3fb;      /* lavanda muy clara */
+  --tarjeta: #ffffff;
+  --texto: #2d2a3e;      /* casi negro: buen contraste */
+  --texto-suave: #6b6880;
+  --borde: #e3ddf0;
+  --lavanda: #cdbdf5;    /* botón */
+  --lavanda-hover: #bba6f0;
+  --foco: #7c5cd6;
+  --menta: #dff3ea;      /* resultado */
+  --menta-texto: #1f5c45;
+  --rosa: #fde2e4;       /* error */
+  --rosa-texto: #9b2c3a;
+  --melocoton: #fde8d7;  /* edad media */
+  --melocoton-texto: #7a4320;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem 1rem;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+.tarjeta {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem 1.5rem;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(45, 42, 62, 0.06);
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.subtitulo {
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--texto-suave);
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.fila {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 1rem;
+  font-size: 1rem;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+}
+
+button {
+  min-height: 48px;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texto);
+  background: var(--lavanda);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: var(--lavanda-hover);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Anillo de foco visible al navegar con teclado */
+input:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+/* El mensaje no ocupa sitio mientras está vacío */
+.mensaje:empty {
+  display: none;
+}
+
+.mensaje {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.mensaje.resultado {
+  background: var(--menta);
+  color: var(--menta-texto);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.mensaje.error {
+  background: var(--rosa);
+  color: var(--rosa-texto);
+}
+
+footer {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+footer a {
+  color: var(--foco);
+}
+
+/* --- Historial --- */
+.historial {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--borde);
+}
+
+.historial h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.historial ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.historial li {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  background: var(--fondo);
+}
+
+.media {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: var(--melocoton);
+  color: var(--melocoton-texto);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* --- Ajustes M3 (React) --- */
+
+/* React pinta dentro de #root: él es ahora el contenedor centrado */
+#root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario input {
+  margin-bottom: 1rem;
+}
+
+select {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 0.75rem;
+  font-size: 1rem;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+}
+
+select:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.historial li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.historial small {
+  color: var(--texto-suave);
+}
