@@ -2,7 +2,7 @@
   "name": "mision-jefe-u4-full-contact-forms",
   "private": true,
   "version": "0.1.0",
-  "description": "M4 · Full Contact Forms — Inscripción en la Federación de Profesionales de Peleas de Pulgares",
+  "description": "M4 · Full Contact Forms — Inscripción en la AFCPPCPEEM (Asociación Federación de Clasificación en Peleas de Pulgares Club Profesional Española Europea Mundial)",
   "type": "module",
   "scripts": {
     "dev": "vite",

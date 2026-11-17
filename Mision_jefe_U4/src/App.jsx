@@ -7,8 +7,8 @@ export default function App() {
   return (
     <>
       <header className="escritorio">
-        <h1>FEPP</h1>
-        <p className="subtitulo">Federación de Profesionales de Peleas de Pulgares</p>
+        <h1>AFCPPCPEEM <span aria-hidden="true">🤙</span></h1>
+        <p className="subtitulo">Asociación Federación de Clasificación en Peleas de Pulgares Club Profesional Española Europea Mundial</p>
       </header>
 
       <main className="contenido">

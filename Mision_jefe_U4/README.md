@@ -1,6 +1,6 @@
-# M4 · Full Contact Forms — FEPP: Federación de Profesionales de Peleas de Pulgares
+# M4 · Full Contact Forms — AFCPPCPEEM 🤙
 
-App en React 19 para inscribirse en la (muy seria) **Federación de Profesionales de Peleas de Pulgares**. Tiene un formulario de alta validado con **React Hook Form + Zod** y una lista de luchadores federados que se lee y se actualiza con **TanStack Query v5** contra un API REST local (**json-server**).
+App en React 19 para inscribirse en la (muy seria) **AFCPPCPEEM: Asociación Federación de Clasificación en Peleas de Pulgares Club Profesional Española Europea Mundial**. Tiene un formulario de alta validado con **React Hook Form + Zod** y una lista de luchadores federados que se lee y se actualiza con **TanStack Query v5** contra un API REST local (**json-server**).
 
 > «Valida o muere.»
 
