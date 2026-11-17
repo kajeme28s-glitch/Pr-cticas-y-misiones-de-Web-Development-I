@@ -1,25 +1,24 @@
-// App.jsx — Componente raíz: cabecera, formulario de inscripción y lista de luchadores.
+// App.jsx — Componente raíz: el "escritorio" con dos ventanas (inscripción y luchadores).
+import Ventana from "./components/Ventana.jsx";
 import FormularioInscripcion from "./components/FormularioInscripcion.jsx";
 import ListaLuchadores from "./components/ListaLuchadores.jsx";
 
 export default function App() {
   return (
     <>
-      <header className="cabecera">
+      <header className="escritorio">
         <h1>FEPP</h1>
         <p className="subtitulo">Federación de Profesionales de Peleas de Pulgares</p>
       </header>
 
       <main className="contenido">
-        <section className="tarjeta" aria-labelledby="titulo-inscripcion">
-          <h2 id="titulo-inscripcion">Inscríbete en la federación</h2>
+        <Ventana id="titulo-inscripcion" titulo="Inscripción en la federación">
           <FormularioInscripcion />
-        </section>
+        </Ventana>
 
-        <section className="tarjeta" aria-labelledby="titulo-luchadores">
-          <h2 id="titulo-luchadores">Luchadores federados</h2>
+        <Ventana id="titulo-luchadores" titulo="Luchadores federados">
           <ListaLuchadores />
-        </section>
+        </Ventana>
       </main>
     </>
   );

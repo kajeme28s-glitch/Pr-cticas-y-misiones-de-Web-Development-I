@@ -116,7 +116,7 @@ export default function FormularioInscripcion() {
       {/* Resultado del envío: el éxito se anuncia con role="status" y el error con role="alert" */}
       {mutacion.isSuccess && (
         <p role="status" className="mensaje exito">
-          ¡{mutacion.data.alias} ya es luchador federado! 👍
+          ¡{mutacion.data.alias} ya es luchador federado!
         </p>
       )}
       {mutacion.isError && (

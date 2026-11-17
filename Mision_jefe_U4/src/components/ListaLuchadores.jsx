@@ -1,4 +1,5 @@
 // ListaLuchadores — Lee los luchadores del API con useQuery (TanStack Query v5), con filtro por categoría.
+// La lista va dentro de un desplegable que se abre y se cierra con una flecha.
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { obtenerLuchadores } from "../services/luchadores.js";
@@ -6,6 +7,7 @@ import { CATEGORIAS, NOMBRE_CATEGORIA } from "../schemas.js";
 
 export default function ListaLuchadores() {
   const [categoria, setCategoria] = useState(""); // "" = todas las categorías
+  const [abierta, setAbierta] = useState(false); // ¿está abierto el desplegable?
 
   const { data, isPending, isError, error, isFetching, refetch } = useQuery({
     // La clave incluye el filtro: cada categoría tiene su propia entrada en la caché.
@@ -17,24 +19,42 @@ export default function ListaLuchadores() {
 
   return (
     <>
-      <label htmlFor="filtro">Filtrar por categoría</label>
-      <select id="filtro" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
-        <option value="">Todas</option>
-        {CATEGORIAS.map((c) => (
-          <option key={c} value={c}>
-            {NOMBRE_CATEGORIA[c]}
-          </option>
-        ))}
-      </select>
+      {/* Botón del desplegable. aria-expanded le dice al lector de pantalla si está abierto */}
+      <button
+        type="button"
+        className="desplegar"
+        aria-expanded={abierta}
+        aria-controls="panel-luchadores"
+        onClick={() => setAbierta((anterior) => !anterior)}
+      >
+        <span className="flecha" aria-hidden="true">▶</span>
+        Ver luchadores {data && `(${data.luchadores.length})`}
+      </button>
 
-      <Resultado
-        data={data}
-        isPending={isPending}
-        isError={isError}
-        error={error}
-        isFetching={isFetching}
-        refetch={refetch}
-      />
+      {/* Panel animado: CSS pasa la altura de 0 a la real (grid-template-rows 0fr → 1fr).
+          inert: mientras está cerrado, lo de dentro no recibe el foco ni lo lee el lector */}
+      <div id="panel-luchadores" className={abierta ? "desplegable abierto" : "desplegable"} inert={!abierta}>
+        <div className="desplegable-contenido">
+          <label htmlFor="filtro">Filtrar por categoría</label>
+          <select id="filtro" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+            <option value="">Todas</option>
+            {CATEGORIAS.map((c) => (
+              <option key={c} value={c}>
+                {NOMBRE_CATEGORIA[c]}
+              </option>
+            ))}
+          </select>
+
+          <Resultado
+            data={data}
+            isPending={isPending}
+            isError={isError}
+            error={error}
+            isFetching={isFetching}
+            refetch={refetch}
+          />
+        </div>
+      </div>
     </>
   );
 }

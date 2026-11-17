@@ -10,7 +10,8 @@ App en React 19 para inscribirse en la (muy seria) **Federación de Profesionale
 - Valida en el cliente con un esquema Zod con mensajes propios en español. Incluye un **refinamiento** del reglamento: la categoría tiene que corresponder a lo que mide tu pulgar (mosca < 5,5 cm · ligero 5,5–6,5 cm · pesado > 6,5 cm).
 - **Pista en vivo**: al escribir la longitud del pulgar te dice qué categoría te corresponde.
 - Al enviar hace un **POST** al API. Mientras se envía, el botón muestra «Inscribiendo…». Si va bien, el formulario se limpia, aparece «¡X ya es luchador federado!» y **la lista se actualiza sola** (invalidación de la query). Si falla, se muestra el error.
-- **Lista de luchadores** con estados de cargando, error (con botón «Reintentar»), vacío y «Actualizando…», y un **filtro por categoría**.
+- **Lista de luchadores** dentro de un **desplegable** que se abre con una flecha ▶ (animación suave). Tiene estados de cargando, error (con botón «Reintentar»), vacío y «Actualizando…», y un **filtro por categoría**.
+- **Estética retro de Windows 2000**: ventanas grises con relieve 3D, barra de título azul, botones que se hunden al pulsar y una foto de paisaje como fondo de escritorio.
 - **★ Bonus**: la respuesta del API también se valida con Zod (`safeParse`). En `db.json` hay un luchador corrupto a propósito y la app lo **descarta y avisa** en lugar de romperse.
 
 ## Cómo arrancarlo
@@ -44,18 +45,23 @@ Mision_jefe_U4/
     ├── services/
     │   └── luchadores.js           capa de servicios: fetch, response.ok y safeParse
     ├── components/
+    │   ├── Ventana.jsx                 marco de ventana Windows 2000 (barra de título + children)
     │   ├── FormularioInscripcion.jsx   React Hook Form + zodResolver + useMutation
     │   ├── MensajeError.jsx            error de un campo con role="alert"
-    │   └── ListaLuchadores.jsx         useQuery con filtro por categoría
-    └── index.css                   estilos (misma base pastel que la M3)
+    │   └── ListaLuchadores.jsx         desplegable + useQuery con filtro por categoría
+    ├── assets/
+    │   └── fondo.jpg                   foto de fondo del escritorio
+    └── index.css                   estilos retro Windows 2000
 ```
 
 ```
 App
-├── FormularioInscripcion
-│   └── MensajeError (uno por campo)
-└── ListaLuchadores
-    └── Resultado (cargando / error / lista)
+├── Ventana «Inscripción en la federación»
+│   └── FormularioInscripcion
+│       └── MensajeError (uno por campo)
+└── Ventana «Luchadores federados»
+    └── ListaLuchadores (botón ▶ + panel desplegable)
+        └── Resultado (cargando / error / lista)
 ```
 
 ## Decisiones técnicas
@@ -108,6 +114,15 @@ En `schemas.js` hay **un** esquema base, `esquemaLuchador`, que describe a un lu
 - `autoComplete` en alias (`nickname`) y email, e `inputMode` numérico en edad y pulgar.
 - Prueba de fuego hecha: el formulario se completa entero solo con el teclado (Tab sigue el orden visual y Enter envía).
 
+### Desplegable de la lista y estilo retro
+
+- El desplegable es un `<button>` con `aria-expanded` (el lector de pantalla anuncia «contraído» o «expandido») y `aria-controls`, que apunta al panel. El estado `abierta` es un `useState` y se cambia con la función actualizadora `setAbierta((anterior) => !anterior)`.
+- **Animación suave sin JavaScript**: el panel es una rejilla CSS cuya única fila pasa de `grid-template-rows: 0fr` (altura 0) a `1fr` (altura real) con una `transition`. La flecha ▶ gira 90° con `transform: rotate(90deg)` cuando `aria-expanded="true"`.
+- Mientras está cerrado, el panel lleva `inert`: lo de dentro (el filtro, el botón «Reintentar») no recibe el foco con Tab ni lo lee el lector de pantalla.
+- Si el sistema pide reducir el movimiento (`prefers-reduced-motion`), se quitan las animaciones.
+- `Ventana` es un componente contenedor: recibe el título por props y el contenido por `children`. Los botones `_ □ ×` de la barra son de adorno, así que llevan `aria-hidden="true"` y no son botones de verdad.
+- El relieve 3D de Windows 2000 se consigue con bordes de dos colores (claro arriba a la izquierda, oscuro abajo a la derecha) y `box-shadow: inset`. Los campos y la lista llevan los colores al revés para que parezcan hundidos.
+
 ### ★ Bonus: validar la respuesta del API
 
 En `obtenerLuchadores()` cada elemento que devuelve el API pasa por `esquemaLuchador.safeParse()`:
@@ -134,7 +149,7 @@ const corruptos = resultados.filter((r) => !r.success);
 
 1. Pulsa «Inscribirme» con todo vacío → salen los 7 errores y el foco va al alias.
 2. Pon 7 cm de pulgar y categoría «Peso mosca» → error del reglamento. Cambia el pulgar a 5 cm → el error desaparece (`deps`).
-3. Rellena todo bien y envía → «Inscribiendo…», mensaje de éxito, el formulario se limpia y el luchador aparece en la lista.
+3. Abre la lista con la flecha «▶ Ver luchadores». Rellena todo bien y envía → «Inscribiendo…», mensaje de éxito, el formulario se limpia, el contador sube y el luchador aparece en la lista.
 4. Cambia el filtro de categoría → cada categoría se pide una vez y queda en la caché (se ve en las DevTools, el icono flotante de abajo).
 5. Apaga `npm run api` y envía o recarga → mensaje de error y botón «Reintentar».
 6. Bonus: mira el aviso naranja de la lista y la consola del navegador.
