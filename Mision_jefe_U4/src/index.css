@@ -158,3 +158,19 @@ button:focus-visible {
   outline: 3px solid var(--foco);
   outline-offset: 2px;
 }
+
+/* Pista bajo el campo del pulgar */
+.ayuda {
+  margin: -0.6rem 0 1rem;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+/* Campo inválido: borde rojo además del mensaje (no solo color: hay texto) */
+[aria-invalid="true"] {
+  border-color: var(--rosa-texto);
+}
+
+.opcion + .error-campo {
+  margin-top: -0.25rem;
+}
