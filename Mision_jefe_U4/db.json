@@ -24,7 +24,7 @@
       "email": "nudillo@fepp.es",
       "edad": 41,
       "mano": "diestra",
-      "longitudPulgar": 6,
+      "longitudPulgar": 6.0,
       "categoria": "ligero"
     },
     {
@@ -35,16 +35,6 @@
       "mano": "diestra",
       "longitudPulgar": 6.2,
       "categoria": "gigante"
-    },
-    {
-      "alias": "Polla Gorda",
-      "email": "BIGnigga@gmail.com",
-      "edad": 21,
-      "mano": "zurda",
-      "longitudPulgar": 7,
-      "categoria": "pesado",
-      "id": "VvmoCzc11sE"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
