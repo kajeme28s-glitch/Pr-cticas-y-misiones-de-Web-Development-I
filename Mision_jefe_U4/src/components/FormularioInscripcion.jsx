@@ -2,15 +2,20 @@
 // RHF recoge los valores (inputs NO controlados); Zod decide si son válidos.
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { esquemaInscripcion, CATEGORIAS, NOMBRE_CATEGORIA, categoriaSegunPulgar } from "../schemas.js";
+import { crearLuchador } from "../services/luchadores.js";
 import MensajeError from "./MensajeError.jsx";
 
 export default function FormularioInscripcion() {
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isSubmitting },
+    reset,
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(esquemaInscripcion), // validamos con Zod
     defaultValues: { alias: "", email: "", edad: "", longitudPulgar: "", categoria: "", aceptaReglamento: false },
@@ -29,10 +34,20 @@ export default function FormularioInscripcion() {
   const pulgar = Number(watch("longitudPulgar"));
   const sugerencia = pulgar >= 3 && pulgar <= 10 ? NOMBRE_CATEGORIA[categoriaSegunPulgar(pulgar)] : null;
 
+  // Mutación: el POST al API con sus estados (isPending / isError / isSuccess)
+  const mutacion = useMutation({
+    mutationFn: crearLuchador,
+    onSuccess: () => {
+      reset(); // limpia el formulario
+      // La lista queda obsoleta: Query la vuelve a pedir y aparece el nuevo luchador.
+      // Al devolver la promesa, la mutación sigue «pendiente» hasta que la lista se ha refrescado.
+      return queryClient.invalidateQueries({ queryKey: ["luchadores"] });
+    },
+  });
+
   // Solo se ejecuta si Zod da el visto bueno. datos ya viene convertido (edad es número)
-  async function onSubmit(datos) {
-    await new Promise((r) => setTimeout(r, 800)); // simulamos la espera (el API llega en el paso 5)
-    console.log("Datos válidos:", datos);
+  function onSubmit(datos) {
+    mutacion.mutate(datos); // dispara el POST validado
   }
 
   return (
@@ -94,9 +109,21 @@ export default function FormularioInscripcion() {
       <MensajeError id="error-aceptaReglamento" error={errors.aceptaReglamento} />
 
       {/* Siempre pulsable: solo se desactiva mientras se envía (evita el doble clic) */}
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Inscribiendo…" : "Inscribirme"}
+      <button type="submit" disabled={mutacion.isPending}>
+        {mutacion.isPending ? "Inscribiendo…" : "Inscribirme"}
       </button>
+
+      {/* Resultado del envío: el éxito se anuncia con role="status" y el error con role="alert" */}
+      {mutacion.isSuccess && (
+        <p role="status" className="mensaje exito">
+          ¡{mutacion.data.alias} ya es luchador federado! 👍
+        </p>
+      )}
+      {mutacion.isError && (
+        <p role="alert" className="mensaje error">
+          No se pudo completar la inscripción: {mutacion.error.message}
+        </p>
+      )}
     </form>
   );
 }

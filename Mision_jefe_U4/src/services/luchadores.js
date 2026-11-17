@@ -22,3 +22,13 @@ async function pedir(url, opciones) {
 export async function obtenerLuchadores() {
   return pedir(`${API_URL}/luchadores`);
 }
+
+// POST: inscribe un luchador nuevo. aceptaReglamento solo sirve en el formulario: no se guarda
+export async function crearLuchador(datos) {
+  const { aceptaReglamento, ...luchador } = datos;
+  return pedir(`${API_URL}/luchadores`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(luchador), // para enviar JSON, el cuerpo es un string
+  });
+}
