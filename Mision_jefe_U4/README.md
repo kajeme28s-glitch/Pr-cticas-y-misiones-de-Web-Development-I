@@ -159,17 +159,16 @@ const corruptos = resultados.filter((r) => !r.success);
 He utilizado **Claude Opus 5.5**.
 
 - Le pasé los PDFs de la U3 y la U4 y le pedí que revisara mis misiones anteriores para seguir el mismo estilo. Me explicó qué había que hacer y qué decisiones tenía que tomar.
-- Las decisiones las tomé yo: usar **json-server** en vez de JSONPlaceholder, el tema (**federación de peleas de pulgares**) y añadir el **filtro por categoría**.
+- Las decisiones las tomé yo: usar json-server en vez de JSONPlaceholder, el tema (federación de peleas de pulgares) y añadir el filtro por categoría.
 - El código, las pruebas en navegador y los commits de cada paso los hizo la IA.
 - Prompts principales:
-  - «necesito hacer la tarea M4 de web […] explicame que hay que hacer, que decisiones he de tomar, vamos a hacer lo mas sencillo posible que cumpla todos los puntos y paso a paso»
-  - «json-server, si - El torneo como tema, no. Prefiero la federacion de profesionales de pelas de pulgares - Hacemos el filtro extra, si - Podemos empezar»
-  - «hazlo tu, pideme permisos»
+  - "necesito hacer la tarea M4 de web […] explicame que hay que hacer, que decisiones he de tomar, vamos a hacer lo mas sencillo posible que cumpla todos los puntos y paso a paso"
+  - "json-server, si - El torneo como tema, no. Prefiero la federacion de profesionales de pelas de pulgares - Hacemos el filtro extra, si - Podemos empezar"
 
 ## Autopsia
 
 **¿Qué API uso?**
-La primera opción era JSONPlaceholder, la API de los ejercicios del tema. El problema es que acepta el POST pero no guarda nada, así que después de invalidar la lista el luchador nuevo no aparecería y no se vería si la invalidación funciona. Elegí **json-server**: es un API REST de verdad en local, guarda los datos en `db.json` y me deja meter un registro corrupto para el bonus. A cambio, hacen falta dos terminales.
+La primera opción era JSONPlaceholder, la API de los ejercicios del tema. El problema es que acepta el POST pero no guarda nada, así que después de invalidar la lista el luchador nuevo no aparecería y no se vería si la invalidación funciona. Elegí json-server: es un API REST de verdad en local, guarda los datos en `db.json` y me deja meter un registro corrupto para el bonus. A cambio, hacen falta dos terminales.
 
 **¿Qué tema le doy al formulario?**
-En vez de un registro típico elegí una **federación de peleas de pulgares**. Además de ser original, me da una regla de negocio con sentido para el `.refine` (la categoría depende de lo que mide el pulgar) y una categoría para filtrar la lista, que es lo que hace que la `queryKey` lleve un parámetro.
+En vez de un registro típico elegí la federación de peleas de pulgares.Me da una regla de negocio con sentido para el `.refine` (la categoría depende de lo que mide el pulgar) y una categoría para filtrar la lista, que es lo que hace que la `queryKey` lleve un parámetro.
