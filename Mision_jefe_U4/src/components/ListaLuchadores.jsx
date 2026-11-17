@@ -27,21 +27,31 @@ export default function ListaLuchadores() {
     );
   }
 
-  // 3) Hay datos
+  // 3) Hay datos (ya validados con Zod en la capa de servicios)
+  const { luchadores, descartados } = data;
+
   return (
     <>
       {/* isFetching: refresco en segundo plano (los datos viejos se siguen viendo) */}
       {isFetching && <p role="status" className="actualizando">Actualizando…</p>}
 
-      {data.length === 0 ? (
+      {/* ★ BONUS: aviso de los registros que Zod ha rechazado */}
+      {descartados > 0 && (
+        <p className="mensaje aviso">
+          ⚠ {descartados === 1 ? "1 registro descartado" : `${descartados} registros descartados`} por datos
+          corruptos del API (detalle en la consola).
+        </p>
+      )}
+
+      {luchadores.length === 0 ? (
         <p className="mensaje">Todavía no hay luchadores inscritos.</p>
       ) : (
         <ul className="lista">
-          {data.map((l) => (
+          {luchadores.map((l) => (
             <li key={l.id}>
               <strong>{l.alias}</strong>
               <small>
-                {NOMBRE_CATEGORIA[l.categoria] ?? l.categoria} · {l.longitudPulgar} cm · {l.mano} · {l.edad} años
+                {NOMBRE_CATEGORIA[l.categoria]} · {l.longitudPulgar} cm · {l.mano} · {l.edad} años
               </small>
             </li>
           ))}
