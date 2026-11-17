@@ -21,11 +21,13 @@ async function pedir(url, opciones) {
   return respuesta.json();
 }
 
-// GET: lista de luchadores.
+// GET: lista de luchadores (todos o de una categoría).
 // ★ BONUS: no nos fiamos del API. Cada luchador pasa por el MISMO esquema Zod (safeParse):
 // los válidos se muestran y los corruptos se descartan y se avisa, en vez de romper la pantalla.
-export async function obtenerLuchadores() {
-  const json = await pedir(`${API_URL}/luchadores`);
+// Si llega una categoría, json-server filtra por ella (?categoria=pesado); si no, devuelve todos.
+export async function obtenerLuchadores(categoria) {
+  const filtro = categoria ? `?categoria=${encodeURIComponent(categoria)}` : "";
+  const json = await pedir(`${API_URL}/luchadores${filtro}`);
   if (!Array.isArray(json)) {
     throw new Error("El API no devolvió una lista de luchadores");
   }
