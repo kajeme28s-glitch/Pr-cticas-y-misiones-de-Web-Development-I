@@ -1,0 +1,61 @@
+/* Estilo claro con colores pastel (misma base que la M3) */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --fondo: #f6f3fb;      /* lavanda muy clara */
+  --tarjeta: #ffffff;
+  --texto: #2d2a3e;      /* casi negro: buen contraste */
+  --texto-suave: #6b6880;
+  --borde: #e3ddf0;
+  --lavanda: #cdbdf5;    /* botón */
+  --lavanda-hover: #bba6f0;
+  --foco: #7c5cd6;
+  --menta: #dff3ea;      /* éxito */
+  --menta-texto: #1f5c45;
+  --rosa: #fde2e4;       /* error */
+  --rosa-texto: #9b2c3a;
+  --melocoton: #fde8d7;  /* aviso */
+  --melocoton-texto: #7a4320;
+}
+
+body {
+  min-height: 100vh;
+  padding: 1.5rem 1rem;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.tarjeta {
+  width: 100%;
+  max-width: 480px;
+  padding: 2rem 1.5rem;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(45, 42, 62, 0.06);
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.subtitulo {
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--texto-suave);
+}

@@ -1,0 +1,15 @@
+# Dependencias e instalaciones (se regeneran con npm install)
+node_modules/
+
+# Salida de compilación de Vite (npm run build)
+dist/
+build/
+
+# Variables de entorno locales (se sube solo .env.example)
+.env
+.env.local
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+*.log

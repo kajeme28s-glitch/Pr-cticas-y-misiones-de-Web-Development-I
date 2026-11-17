@@ -1,0 +1,40 @@
+{
+  "luchadores": [
+    {
+      "id": "1",
+      "alias": "El Pulgar de Hierro",
+      "email": "hierro@fepp.es",
+      "edad": 34,
+      "mano": "diestra",
+      "longitudPulgar": 6.8,
+      "categoria": "pesado"
+    },
+    {
+      "id": "2",
+      "alias": "La Uña Veloz",
+      "email": "unaveloz@fepp.es",
+      "edad": 22,
+      "mano": "zurda",
+      "longitudPulgar": 5.1,
+      "categoria": "mosca"
+    },
+    {
+      "id": "3",
+      "alias": "Nudillo Loco",
+      "email": "nudillo@fepp.es",
+      "edad": 41,
+      "mano": "diestra",
+      "longitudPulgar": 6.0,
+      "categoria": "ligero"
+    },
+    {
+      "id": "4",
+      "alias": "Registro Corrupto",
+      "email": "esto-no-es-un-email",
+      "edad": "veinte",
+      "mano": "diestra",
+      "longitudPulgar": 6.2,
+      "categoria": "gigante"
+    }
+  ]
+}
