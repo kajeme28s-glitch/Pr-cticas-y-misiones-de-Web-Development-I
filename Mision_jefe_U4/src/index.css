@@ -174,3 +174,62 @@ button:focus-visible {
 .opcion + .error-campo {
   margin-top: -0.25rem;
 }
+
+/* --- Mensajes de estado (cargando / error / éxito / aviso) --- */
+.mensaje {
+  padding: 1rem;
+  border-radius: 12px;
+  background: var(--fondo);
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.mensaje.error {
+  background: var(--rosa);
+  color: var(--rosa-texto);
+}
+
+.mensaje.error button {
+  margin-top: 0.75rem;
+}
+
+.mensaje.exito {
+  margin-top: 1rem;
+  background: var(--menta);
+  color: var(--menta-texto);
+  font-weight: 600;
+}
+
+.mensaje.aviso {
+  margin-bottom: 1rem;
+  background: var(--melocoton);
+  color: var(--melocoton-texto);
+  font-size: 0.9rem;
+}
+
+.actualizando {
+  margin-bottom: 0.5rem;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+/* --- Lista de luchadores --- */
+.lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.lista li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  background: var(--fondo);
+}
+
+.lista small {
+  color: var(--texto-suave);
+}
